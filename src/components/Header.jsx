@@ -1,27 +1,23 @@
-import React from 'react'
+import { React, useState } from 'react'
 import './Header.css'
 import Logo from '../assets/img/logo.svg'
-import DefaultProfilePic from '../assets/img/defaultProfilePic.svg'
+import HeaderDropdown from './HeaderDropdown'
+import Button from './Button'
 
 function Header() {
+  const [isLoged, setIsLoged] = useState(false);
+  const [role, setRole] = useState('cuidador');
   return (
     <header>
         <img className="logo" src={Logo} alt="Elder.ly Logo"/>
         <nav>
-          <div className="links">
-            <a href="/">Home</a>
-            <a href="/">Contato</a>
-            <a href="/">Cuidadores</a>
-            {/* If Logado */}
-            <a href="/">Chat</a>
-            {/* If cuidador */}
-            <a href="/">Agenda</a>
-          </div>
-          <div className="profilePic">
-            <img src={DefaultProfilePic} alt="Foto de Perfil"/>
-          </div>
-          {/* Dropdown com opções de perfil */}
+          <a href="/"><span>Home</span></a>
+          <a href="/"><span>Contato</span></a>
+          <a href="/"><span>Cuidadores</span></a>
+          {isLoged ? <a href="/"><span>Chat</span></a> : null}
+          {isLoged && role === 'cuidador' ? <a href="/"><span>Agenda</span></a> : null}
         </nav>
+        { isLoged ? <HeaderDropdown /> : <div className='user'><Button filled={false} text="Login"/> <Button filled={true} text="Cadastre-se"/></div>}
     </header>
   )
 }

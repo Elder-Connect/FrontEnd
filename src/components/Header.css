@@ -1,39 +1,63 @@
-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--white);
-    height: 5em;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 5em;
 }
 
-.logo{
-    margin-left: 2em;
+.logo {
+  margin-left: 2em;
 }
 
-header nav{
-    display: flex;
-    align-items: center;
-    gap: 2em;
-    margin-right: 2em;
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  height: 100%;
 }
 
-.links{
-    display: flex;
-    gap: 1em;
+a {
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--black);
+  height: 100%;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
 }
 
-header nav a{
-    font-family: 'Roboto', sans-serif;
-    font-weight: 600;
-    text-decoration: none;
-    color: var(--black);
+a:hover {
+  color: var(--primary);
+  transition: 0.2s;
 }
 
-header nav a:hover{
-    color: var(--primary);
-    transition: 0.2s;
+.profilePic {
+  cursor: pointer;
 }
 
-.profilePic{
-    cursor: pointer;
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--white);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: var(--black);
+  padding: 1em;
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background-color: var(--primary);
+}
+
+.profilePic:hover .dropdown-content {
+  display: flex;
+}
+
+.user{
+  margin-right: 2em;
 }

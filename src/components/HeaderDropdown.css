@@ -1,0 +1,42 @@
+.headerDropdown {
+  position: relative;
+  margin-right: 2em;
+}
+
+.profilePic {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.profilePic img {
+  width: 36px;
+  height: 36px;
+}
+
+.dropdownContent {
+  position: absolute;
+  margin-top: 0.5em;
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em 1em;
+  right: calc(100% - 36px);
+}
+
+.dropdownContent a {
+  padding: 0.5em 0;
+  text-decoration: none;
+  white-space: nowrap;
+  color: var(--black);
+}
+
+.dropdownContent a:hover {
+  color: var(--primary);
+}
+
+.icon{
+  font-size: 1.25em;
+  margin-right: 0.5em;
+  transform: translateY(0.15em);
+}

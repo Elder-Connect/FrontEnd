@@ -1,7 +1,8 @@
 *{
-  --primary: #229EF7;
-  --black: #343643;
-  --white: #E6E6E6;
+  --primary: hsl(205, 93%, 55%);
+  --primary-hover: hsl(203, 93%, 45%);
+  --black: hsl(232, 13%, 23%);
+  --white: hsl(0, 0%, 90%);
 }
 
 body {
@@ -16,4 +17,10 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.App svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
 }
