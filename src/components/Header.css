@@ -1,0 +1,39 @@
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--white);
+    height: 5em;
+}
+
+.logo{
+    margin-left: 2em;
+}
+
+header nav{
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    margin-right: 2em;
+}
+
+.links{
+    display: flex;
+    gap: 1em;
+}
+
+header nav a{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--black);
+}
+
+header nav a:hover{
+    color: var(--primary);
+    transition: 0.2s;
+}
+
+.profilePic{
+    cursor: pointer;
+}
