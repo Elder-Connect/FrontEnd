@@ -1,9 +1,12 @@
 import { React, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Button(props) {
-  const { href, text, filled } = props;
+  const { text, filled, primaryColor, path, padding, fontSize } = props;
 
   const [isHover, setIsHover] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleMouseEnter = () => {
     setIsHover(true);
@@ -14,10 +17,12 @@ function Button(props) {
 
   const ButtonStyle = {
     backgroundColor: filled ? "var(--primary)" : "transparent",
-    color: filled ? "var(--white)" : "var(--primary)",
-    border: "none",
+    color: primaryColor ? "var(--primary)" : filled ? "var(--white)" : "var(--black)",
+    fontFamily: "Roboto, sans-serif",
+    fontWeight: 600,
+    fontSize: fontSize ? fontSize : "1em",
     display: "inline-block",
-    padding: "1em 1.5em",
+    padding: padding ? padding : "1em 2em",
     borderRadius: "8px",
     border: "none",
     cursor: "pointer",
@@ -32,14 +37,14 @@ function Button(props) {
   };
 
   return (
-    <a
-      href={href}
+    <button
+      onClick={() => navigate(path)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={isHover ? ButtonHoverStyle : ButtonStyle}
     >
       {text}
-    </a>
+    </button>
   );
 }
 

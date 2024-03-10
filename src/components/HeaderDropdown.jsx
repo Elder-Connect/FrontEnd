@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from "react-router-dom";
 import './HeaderDropdown.css';
 import DefaultProfilePic from '../assets/img/defaultProfilePic.svg'
-import { ReactComponent as LogoutIcon } from '@material-symbols/svg-400/rounded/logout-fill.svg';
-import { ReactComponent as ManageAccountIcon } from '@material-symbols/svg-400/rounded/manage_accounts-fill.svg';
+import { ReactComponent as LogoutIcon } from '@material-symbols/svg-600/rounded/logout-fill.svg';
+import { ReactComponent as ManageAccountIcon } from '@material-symbols/svg-600/rounded/manage_accounts-fill.svg';
 
 function HeaderDropdown() {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
+
+    const navigate = useNavigate();
   
     const toggleDropdown = () => {
       setIsOpen(!isOpen);
@@ -32,8 +35,8 @@ function HeaderDropdown() {
         </div>
         {isOpen && (
           <div className="dropdownContent">
-            <a href="/"><ManageAccountIcon className='icon' /><span>Meu Perfil</span></a>
-            <a href="/"><LogoutIcon className='icon' /><span>Sair</span></a>
+            <button onClick={() => navigate("/Perfil")}><ManageAccountIcon className='icon' /><span>Meu Perfil</span></button>
+            <button onClick={() => navigate("/Sair")}><LogoutIcon className='icon' /><span>Sair</span></button>
           </div>
         )}
       </div>

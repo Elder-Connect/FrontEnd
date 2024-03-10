@@ -2,7 +2,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 5em;
+  height: 7vh;
 }
 
 .logo {
@@ -13,24 +13,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1em;
   height: 100%;
-}
-
-a {
-  font-family: "Roboto", sans-serif;
-  font-weight: 600;
-  text-decoration: none;
-  color: var(--black);
-  height: 100%;
-  transition: 0.2s;
-  display: flex;
-  align-items: center;
-}
-
-a:hover {
-  color: var(--primary);
-  transition: 0.2s;
 }
 
 .profilePic {
