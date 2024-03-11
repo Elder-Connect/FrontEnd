@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom"
 import './Header.css'
 import Logo from '../assets/img/logo.svg'
 import HeaderDropdown from './HeaderDropdown'
-import Button from './Button'
 
 function Header() {
   const [isLoged, setIsLoged] = useState(false);
@@ -15,13 +14,18 @@ function Header() {
     <header>
         <img className="logo" src={Logo} alt="Elder.ly Logo"/>
         <nav>
-          <Button path="/" text="Home"/>
-          <Button path="/Contato" text="Contato"/>
-          <Button path="/Cuidadores" text="Cuidadores"/>
-          {isLoged ? <Button path="/Chat" text="Chat"/> : null}
-          {isLoged && role === 'cuidador' ? <Button path="/Agenda" text="Agenda"/> : null}
+          <button className='btnNoBg' onClick={() => navigate("/")}>Home</button>
+          <button className='btnNoBg' onClick={() => navigate("/Contato")}>Contato</button>
+          <button className='btnNoBg' onClick={() => navigate("/Cuidadores")}>Cuidadores</button>
+          {isLoged ? <button className='btnNoBg' onClick={() => navigate("/Chat")}>Chat</button> : null}
+          {isLoged && role === 'cuidador' ? <button className='btnNoBg' onClick={() => navigate("/Agenda")}>Agenda</button> : null}
         </nav>
-        { isLoged ? <HeaderDropdown /> : <div className='user'><Button path="/Login" primaryColor={true} text="Login"/> <Button path="/Cadastro" filled={true} text="Cadastre-se"/></div>}
+        { isLoged ? <HeaderDropdown /> : 
+          <div className='user'>
+            <button className='btnNoBg primaryColor' onClick={() => navigate("/Login")}>Login</button> 
+            <button className='btn' onClick={() => navigate("/Cadastro")}>Cadastro</button>
+          </div>
+        }
     </header>
   )
 }
