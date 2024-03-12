@@ -22,7 +22,7 @@ function Header() {
         </nav>
         { isLoged ? <HeaderDropdown /> : 
           <div className='user'>
-            <button className='btnNoBg primaryColor' onClick={() => navigate("/Login")}>Login</button> 
+            <button className='btnLogin' onClick={() => navigate("/Login")}>Login</button> 
             <button className='btn' onClick={() => navigate("/Cadastro")}>Cadastro</button>
           </div>
         }
