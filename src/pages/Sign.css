@@ -1,4 +1,4 @@
-.signup {
+.sign {
   display: flex;
   margin: 0 auto;
 }
@@ -12,6 +12,8 @@
 .imageContainer {
   background-color: var(--primary);
   border-radius: 16px 0px 0px 16px;
+  display: flex;
+  justify-content: center;
 }
 
 .imageContainer img {
@@ -23,11 +25,23 @@
   border: 1px solid var(--white);
   border-left: 0px;
   border-radius: 0px 16px 16px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.formContainer h1 {
+.formTitle{
+  font-size: 3em;
+  margin: 0;
   color: var(--black);
   text-align: center;
+}
+
+.formSubtitle{
+  font-size: 0.75em;
+  margin-bottom: 3em;
+  text-align: center;
+  color: var(--subtitle);
 }
 
 .formContainer .btn{
@@ -52,7 +66,11 @@
 }
 
 @media screen and (max-width: 768px) {
-  .container {
-    flex-direction: column;
+  .imageContainer {
+    display: none;
+  }
+  .formContainer {
+    border: 1px solid var(--white);
+    border-radius: 16px;
   }
 }
