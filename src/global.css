@@ -1,6 +1,9 @@
 *{
   --primary: hsl(205, 93%, 55%);
   --primary-hover: hsl(203, 93%, 45%);
+  --primary-medium: hsl(204, 93%, 84%);
+  --primary-light: hsl(205, 61%, 90%);
+  --secondary: hsl(40, 100%, 50%);
   --black: hsl(232, 13%, 23%);
   --subtitle: hsl(232, 3%, 75%);
   --white: hsl(0, 0%, 90%);

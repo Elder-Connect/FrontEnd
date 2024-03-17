@@ -13,7 +13,7 @@ function Router() {
 				<Route path={"/"} element={<Home />} />
 				<Route path="/Cadastro" element={<SignUp />} />
 				<Route path="/Entrar" element={<SignIn />} />
-        <Route path="/cuidadores" element={<Cuidadores />} />
+        <Route path="/Cuidadores" element={<Cuidadores />} />
 				<Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
