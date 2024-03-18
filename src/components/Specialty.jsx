@@ -1,4 +1,5 @@
 import React from "react";
+import "./Specialty.css";
 
 function Specialty(props) {
   const { text } = props;

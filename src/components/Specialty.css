@@ -1,0 +1,12 @@
+.specialty {
+  background-color: var(--primary-medium);
+  padding: 0.25em 1.5em;
+  border-radius: 4px;
+  font-size: 0.75em;
+  font-weight: 400;
+}
+
+.specialty p {
+  margin: 0;
+  color: var(--black);
+}

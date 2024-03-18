@@ -38,7 +38,7 @@ function Card() {
             <div className="price">
               <p>R$ 150 /hora</p>
             </div>
-            <button className="btn" onClick={() => navigate("/Entrar")}>Contratar</button>
+            <button className="btn" onClick={() => navigate("/Entrar")}>Conversar</button>
           </div>
         </div>
     </>
