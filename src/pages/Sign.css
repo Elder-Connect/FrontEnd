@@ -1,6 +1,7 @@
 .sign {
   display: flex;
   margin: 0 auto;
+  max-height: calc(100vh - 8em);
 }
 
 .formContainer,
