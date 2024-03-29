@@ -15,9 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      - name: Unset CI environment variable
-        run: |
-          unset CI
       - uses: actions/checkout@v3
         with:
           submodules: true
