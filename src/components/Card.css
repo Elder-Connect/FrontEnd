@@ -1,0 +1,102 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 47%;
+  border: 1px solid var(--white);
+  border-radius: 8px;
+  height: 300px;
+  padding: 1em;
+}
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1em;
+}
+
+.info {
+  display: flex;
+  gap: 1em;
+}
+
+.infoImg img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.infoText {
+  margin-top: 0.30em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+p, h3 {
+  margin: 0;
+}
+
+.neighborhood{
+  font-size: 0.75em;
+  color: var(--subtitle);
+}
+
+.name{
+  font-size: 1.25em;
+  font-weight: 700;
+}
+
+.neighborhood {
+  font-size: 0.75em;
+  color: var(--primary-medium);
+}
+
+.specialties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--secondary);
+  font-weight: 700;
+}
+
+.description {
+  padding: 1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--black);
+  flex: 1;
+}
+
+.cardFooter{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0em 1em;
+}
+
+.price {
+  font-weight: bold;
+  color: var(--black);
+}
+
+.card .btn{
+  padding: 0.75em 2em;
+}
+
+.card .btn:hover{
+  background-color: var(--primary-hover);
+  color: var(--white);
+}
+
+@media screen and (max-width: 1500px) {
+  .card {
+    width: 100%;
+  }
+}

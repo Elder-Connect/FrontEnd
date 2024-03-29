@@ -1,0 +1,64 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+}
+
+.logo {
+  margin-left: 2em;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.btnLogin {
+  white-space: nowrap;
+  color: var(--black);
+  background-color: transparent;
+  padding: 1em 2em;
+  border: none;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition:  0.2s;
+}
+
+.btnLogin:hover, .btnLogin:focus {
+  outline: none;
+  color: var(--primary);
+}
+
+.profilePic {
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--white);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: var(--black);
+  padding: 1em;
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background-color: var(--primary);
+}
+
+.profilePic:hover .dropdown-content {
+  display: flex;
+}
+
+.user{
+  margin-right: 2em;
+}
