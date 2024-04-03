@@ -103,3 +103,15 @@ code {
   font-weight: 500;
   color: var(--black);
 }
+
+.textLink{
+  font-weight: 500;
+  color: var(--primary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.textLink:hover{
+  color: var(--primary-hover);
+}
