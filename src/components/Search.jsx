@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './Search.css';
-import { ReactComponent as SearchIcon } from '@material-symbols/svg-600/rounded/search-fill.svg';
 import DatePicker, { registerLocale } from "react-datepicker";
 import ptBr from "date-fns/locale/pt-BR";
 registerLocale("pt-BR", ptBr);

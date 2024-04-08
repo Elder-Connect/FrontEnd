@@ -34,10 +34,6 @@ nav {
   color: var(--primary);
 }
 
-.profilePic {
-  cursor: pointer;
-}
-
 .dropdown-content {
   display: none;
   position: absolute;
@@ -53,10 +49,6 @@ nav {
 
 .dropdown-content a:hover {
   background-color: var(--primary);
-}
-
-.profilePic:hover .dropdown-content {
-  display: flex;
 }
 
 .user{

@@ -18,7 +18,7 @@ function SignIn() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/signin', formData);
+      console.log(await axios.post('http://localhost:8080/signin', formData));
     } catch (error) {
       console.error('Failed to sign in:', error.message);
     }

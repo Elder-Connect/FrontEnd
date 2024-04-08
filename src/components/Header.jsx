@@ -1,14 +1,25 @@
-import { React, useState } from 'react'
+import { React, useState, useContext } from 'react'
+import { UserContext } from '../App'
+import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate } from "react-router-dom"
 import './Header.css'
 import Logo from '../assets/img/logo.svg'
 import HeaderDropdown from './HeaderDropdown'
+import auth from '../services/auth';
 
 function Header() {
-  const [isLoged, setIsLoged] = useState(false);
-  const [role, setRole] = useState('cuidador');
+  const { user, setUser } = useContext(UserContext);
+  const [ role ] = useState('cuidador');
 
   const navigate = useNavigate();
+
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      setUser(await auth(tokenResponse.access_token));
+      localStorage.setItem('accessToken', tokenResponse.access_token);
+    },
+    onError: errorResponse => console.log(errorResponse),
+  });
 
   return (
     <header>
@@ -17,13 +28,12 @@ function Header() {
           <button className='btnNoBg' onClick={() => navigate("/")}>Home</button>
           <button className='btnNoBg' onClick={() => navigate("/Contato")}>Contato</button>
           <button className='btnNoBg' onClick={() => navigate("/Cuidadores")}>Cuidadores</button>
-          {isLoged ? <button className='btnNoBg' onClick={() => navigate("/Chat")}>Chat</button> : null}
-          {isLoged && role === 'cuidador' ? <button className='btnNoBg' onClick={() => navigate("/Agenda")}>Agenda</button> : null}
+          {user ? <button className='btnNoBg' onClick={() => navigate("/Chat")}>Chat</button> : null}
+          {user && role === 'cuidador' ? <button className='btnNoBg' onClick={() => navigate("/Agenda")}>Agenda</button> : null}
         </nav>
-        { isLoged ? <HeaderDropdown /> : 
+        { user ? <HeaderDropdown /> : 
           <div className='user'>
-            <button className='btnLogin' onClick={() => navigate("/Entrar")}>Login</button> 
-            <button className='btn' onClick={() => navigate("/Cadastro")}>Cadastro</button>
+            <button className='btn' onClick={login}>Entrar com Google</button>
           </div>
         }
     </header>

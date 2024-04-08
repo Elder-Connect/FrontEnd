@@ -37,7 +37,7 @@ function SignUp() {
     event.preventDefault();
     console.log(formData);
     try {
-      const response = await axios.post('http://localhost:8080/signup', formData);
+      console.log(await axios.post('http://localhost:8080/signup', formData));
     } catch (error) {
       console.error('Failed to sign up:', error.message);
     }
