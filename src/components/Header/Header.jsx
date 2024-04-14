@@ -1,11 +1,11 @@
 import { React, useState, useContext } from 'react'
-import { UserContext } from '../App'
+import { UserContext } from '../../App'
 import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate } from "react-router-dom"
 import './Header.css'
-import Logo from '../assets/img/logo.svg'
-import HeaderDropdown from './HeaderDropdown'
-import auth from '../services/auth';
+import Logo from '../../assets/img/logo.svg'
+import HeaderDropdown from './HeaderDropdown/HeaderDropdown'
+import auth from '../../services/auth';
 
 function Header() {
   const { user, setUser } = useContext(UserContext);

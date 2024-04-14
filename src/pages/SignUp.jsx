@@ -1,5 +1,5 @@
 import { React, useState } from 'react'
-import Header from '../components/Header'
+import Header from '../components/Header/Header'
 import './Sign.css'
 import SignImage from '../assets/img/sign.svg'
 import axios from 'axios';

@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from '../components/Header'
-import Card from '../components/Card'
-import Search from '../components/Search'
+import Header from '../components/Header/Header'
+import Card from '../components/Card/Card'
+import Search from '../components/Search/Search'
 
 function Cuidadores() {
   return (

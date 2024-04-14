@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from "react-router-dom"
 import { ReactComponent as Grade } from '@material-symbols/svg-600/rounded/grade-fill.svg';
 import './Card.css'
-import Specialty from './Specialty'
+import Specialty from '../Specialty/Specialty'
 
 function Card() {
   const navigate = useNavigate();

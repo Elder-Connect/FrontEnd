@@ -4,7 +4,7 @@ import './HeaderDropdown.css';
 import { googleLogout } from '@react-oauth/google';
 import { ReactComponent as LogoutIcon } from '@material-symbols/svg-600/rounded/logout-fill.svg';
 import { ReactComponent as ManageAccountIcon } from '@material-symbols/svg-600/rounded/manage_accounts-fill.svg';
-import { UserContext } from '../App';
+import { UserContext } from '../../../App';
 
 function HeaderDropdown() {
     const [isOpen, setIsOpen] = useState(false);
