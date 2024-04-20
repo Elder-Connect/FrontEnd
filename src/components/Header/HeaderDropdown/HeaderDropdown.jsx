@@ -45,8 +45,8 @@ function HeaderDropdown() {
         </div>
         {isOpen && (
           <div className="dropdownContent">
-            <button onClick={() => navigate("/Perfil")}><ManageAccountIcon className='icon' /><span>Meu Perfil</span></button>
-            <button onClick={() => signOut()}><LogoutIcon className='icon' /><span>Sair</span></button>
+            <button onClick={() => navigate("/Perfil")}><ManageAccountIcon className='icon' />Meu Perfil</button>
+            <button onClick={() => signOut()}><LogoutIcon className='icon' />Sair</button>
           </div>
         )}
       </div>

@@ -10,16 +10,15 @@ import api from '../../services/api';
 import { toast } from 'react-toastify';
 
 function Header() {
-  const { user, setUser } = useContext(UserContext);
-
   const navigate = useNavigate();
-
+  
+  //Login  
+  const { user, setUser } = useContext(UserContext);
   const login = useGoogleLogin({
     scope: 'https://www.googleapis.com/auth/calendar',
     onSuccess: async (tokenResponse) => {handleLogin(tokenResponse)},
     onError: errorResponse => console.log(errorResponse),
   });
-
   async function handleLogin(tokenResponse){
     const userInfo = await auth(tokenResponse.access_token);
     setUser(userInfo);
@@ -43,6 +42,7 @@ function Header() {
       }
     }
   }
+  
   return (
     <header>
         <img className="logo" src={Logo} alt="Elder.ly Logo"/>
