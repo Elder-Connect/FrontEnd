@@ -40,6 +40,7 @@
 }
 
 .fraseEfeito{
+    text-wrap: balance;
     margin-bottom: 2em;
 }
 
@@ -51,7 +52,8 @@
 
 .question h2{
     color: var(--black);
-    font-weight: 400;
+    font-weight: 600;
+    font-size: 2em;
 }
 
 .conteudoEspera{
@@ -61,16 +63,22 @@
     flex-direction: row-reverse;
     justify-content: space-between;
     margin: 3vh 0vh 3vh 0vh;
+    gap: 3em;
+}
+
+.imageContainer2{
+    width: 50%;
 }
 
 .imageContainer2 img{
-    height: 75vh;
+    height: auto;
 }
 
 .textoEspera{
-    width: 45%;
-    font-size: 20px;
-    text-align: center;
+    width: 50%;
+    font-size: 1.25em;
+    text-align: right;
+    text-wrap: balance;
 }
 
 .textoCor{
@@ -79,6 +87,10 @@
 
 .conteudoQuemSomos{
     margin: 3vh 0vh 3vh 0vh;
+}
+
+.conteudoQuemSomos p{
+    text-align: center;
 }
 
 .imageContainer3 img{
@@ -103,20 +115,30 @@
     margin: 3vh 0vh 3vh 0vh;
 }
 
+.btn{
+    font-size: 1.25em;
+}
+
 .conteudoValores1, 
 .conteudoValores3{
     display: flex;
     flex-direction: row;
-    margin: 3vh 0vh 3vh 0vh;
+    gap: 3em;
 }
 
 .conteudoValores2{
     display: flex;
     flex-direction: row-reverse;
-    margin: 3vh 0vh 3vh 0vh;
+    gap: 3em;
 }
 .respeitoDignidade .textoCor{
     text-align: end;
+}
+
+.confiancaTransparencia, .respeitoDignidade, .qualidadeEficiencia{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .confiancaTransparencia img, .respeitoDignidade img, .qualidadeEficiencia img{
@@ -126,7 +148,11 @@
 
 .textoValores{
     color: var(--black);
-    align-self: center;
     font-size: 20px;
-    width: 90%;
+    width: 75%;
+    text-align: right;
+}
+
+.textoLeft{
+    text-align: left;
 }

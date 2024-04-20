@@ -1,12 +1,11 @@
-import { React, useState, useContext } from 'react'
+import { React, useContext } from 'react'
 import { UserContext } from '../../App'
 import { useNavigate } from "react-router-dom"
 import './Footer.css'
 import Logo from '../../assets/img/logo.svg'
 
 function Footer() {
-    const { user, setUser } = useContext(UserContext);
-    const [ role ] = useState('cuidador');
+    const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
 
