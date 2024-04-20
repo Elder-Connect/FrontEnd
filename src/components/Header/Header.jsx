@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import './Header.css'
 import Logo from '../../assets/img/logo.svg'
 import HeaderDropdown from './HeaderDropdown/HeaderDropdown'
+import GoogleBtn from './GoogleBtn/GoogleBtn';
 import auth from '../../services/auth';
 import api from '../../services/api';
 import { toast } from 'react-toastify';
@@ -54,7 +55,7 @@ function Header() {
         </nav>
         { user ? <HeaderDropdown /> : 
           <div className='user'>
-            <button className='btn' onClick={login}>Entrar com Google</button>
+            <GoogleBtn onClick={login} />
           </div>
         }
     </header>
