@@ -8,9 +8,11 @@ import HomeImage4 from '../assets/img/homeImage4.svg'
 import HomeImage5 from '../assets/img/homeImage5.svg'
 import HomeImage6 from '../assets/img/homeImage6.svg'
 import Footer from '../components/Footer/Footer'
+import { useNavigate } from 'react-router-dom'
 
 
 function Home() {
+  const navigate = useNavigate();
   return (
     <>
       <Header />
@@ -23,7 +25,7 @@ function Home() {
 
               <p className='fraseEfeito'>Nossos profissionais são treinados e qualificados para atender o que mais importa para você com excelência e sabedoria, quando, onde e como quiser!</p>
 
-              <button type="submit" className='btn'>Conheça nossos profissionais</button>
+              <button onClick={() => navigate("/Cuidadores")} className='btn'>Conheça nossos profissionais</button>
             </div>
           </div>
           <div className='imageContainer1'>
@@ -65,7 +67,7 @@ function Home() {
           </div>
 
           <div className='botaoFacaParte'>
-          <button type="submit" className='btn'>Faça Parte</button>
+          <button onClick={() => navigate("/Cuidadores")} className='btn'>Faça Parte</button>
           </div>
         
         </div>
