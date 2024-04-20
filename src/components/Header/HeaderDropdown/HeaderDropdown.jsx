@@ -33,6 +33,7 @@ function HeaderDropdown() {
     const signOut = () => {
       setUser(null);
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("userId");
       googleLogout();
       navigate('/');
     };

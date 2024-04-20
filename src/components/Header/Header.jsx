@@ -6,6 +6,7 @@ import './Header.css'
 import Logo from '../../assets/img/logo.svg'
 import HeaderDropdown from './HeaderDropdown/HeaderDropdown'
 import auth from '../../services/auth';
+import api from '../../services/api';
 
 function Header() {
   const { user, setUser } = useContext(UserContext);
@@ -14,13 +15,29 @@ function Header() {
   const navigate = useNavigate();
 
   const login = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      setUser(await auth(tokenResponse.access_token));
-      localStorage.setItem('accessToken', tokenResponse.access_token);
-    },
+    scope: 'https://www.googleapis.com/auth/calendar',
+    onSuccess: async (tokenResponse) => {handleLogin(tokenResponse)},
     onError: errorResponse => console.log(errorResponse),
   });
 
+  async function handleLogin(tokenResponse){
+    const userInfo = await auth(tokenResponse.access_token);
+    setUser(userInfo);
+    
+    try {
+      const response = await api.get(`/usuarios/email/${userInfo.email}`);
+      if (response.status === 200) {
+        localStorage.setItem('accessToken', tokenResponse.access_token);
+        localStorage.setItem('userId', response.data.id);
+      }
+    } catch (error) {
+      if (error.response.status === 404) {
+        navigate('/Cadastro', { state: { userInfo, tokenResponse } });
+      } else {
+        console.error('Error retrieving user data:', error);
+      }
+    }
+  }
   return (
     <header>
         <img className="logo" src={Logo} alt="Elder.ly Logo"/>
@@ -29,7 +46,6 @@ function Header() {
           <button className='btnNoBg' onClick={() => navigate("/Contato")}>Contato</button>
           <button className='btnNoBg' onClick={() => navigate("/Cuidadores")}>Cuidadores</button>
           {user ? <button className='btnNoBg' onClick={() => navigate("/Chat")}>Chat</button> : null}
-          {user && role === 'cuidador' ? <button className='btnNoBg' onClick={() => navigate("/Agenda")}>Agenda</button> : null}
         </nav>
         { user ? <HeaderDropdown /> : 
           <div className='user'>
