@@ -1,0 +1,132 @@
+.containerHome{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 90%;
+    height: calc(100% - 6em);
+}
+
+.conteudo {
+    display: flex;
+    margin: 0 auto;
+    height: 80vh;
+    width: 100%;
+    justify-content: space-between;
+    margin: 3vh 0vh 3vh 0vh;
+}
+
+.introduction{
+    width: 50vw;
+    display: flex;
+    align-items: center;
+}
+
+.imageContainer1{
+    display: flex;
+    justify-content: right;
+    width: 40vw;
+}
+
+.titulo1{
+    margin: 0;
+}
+
+.titulo2{
+    color: var(--primary);
+    font-size: 50px; 
+    margin-top: 0px;
+}
+
+.fraseEfeito{
+    margin-bottom: 2em;
+}
+
+.bloco{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.question h2{
+    color: var(--black);
+    font-weight: 400;
+}
+
+.conteudoEspera{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    margin: 3vh 0vh 3vh 0vh;
+}
+
+.imageContainer2 img{
+    height: 75vh;
+}
+
+.textoEspera{
+    width: 45%;
+    font-size: 20px;
+    text-align: center;
+}
+
+.textoCor{
+    color: var(--primary);
+}
+
+.conteudoQuemSomos{
+    margin: 3vh 0vh 3vh 0vh;
+}
+
+.imageContainer3 img{
+    height: 65vh;
+}
+
+.textoImage{
+    display: flex;
+    flex-direction: row;
+    margin: 3vh 0vh 3vh 0vh;
+}
+.textoQuem{
+    align-self: center;
+    font-size: 24px;
+    color: var(--black);
+    line-height: 1.5em
+}
+
+.botaoFacaParte{
+    display: flex;
+    justify-content: center;
+    margin: 3vh 0vh 3vh 0vh;
+}
+
+.conteudoValores1, 
+.conteudoValores3{
+    display: flex;
+    flex-direction: row;
+    margin: 3vh 0vh 3vh 0vh;
+}
+
+.conteudoValores2{
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 3vh 0vh 3vh 0vh;
+}
+.respeitoDignidade .textoCor{
+    text-align: end;
+}
+
+.confiancaTransparencia img, .respeitoDignidade img, .qualidadeEficiencia img{
+    width: 100%;
+    height: auto;
+}
+
+.textoValores{
+    color: var(--black);
+    align-self: center;
+    font-size: 20px;
+    width: 90%;
+}
