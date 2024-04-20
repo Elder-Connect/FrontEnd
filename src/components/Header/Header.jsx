@@ -1,16 +1,16 @@
-import { React, useState, useContext } from 'react'
+import { React, useContext } from 'react'
 import { UserContext } from '../../App'
-import { useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import { useNavigate } from "react-router-dom"
 import './Header.css'
 import Logo from '../../assets/img/logo.svg'
 import HeaderDropdown from './HeaderDropdown/HeaderDropdown'
 import auth from '../../services/auth';
 import api from '../../services/api';
+import { toast } from 'react-toastify';
 
 function Header() {
   const { user, setUser } = useContext(UserContext);
-  const [ role ] = useState('cuidador');
 
   const navigate = useNavigate();
 
@@ -31,10 +31,15 @@ function Header() {
         localStorage.setItem('userId', response.data.id);
       }
     } catch (error) {
-      if (error.response.status === 404) {
+      if (error.response && error.response.status === 404) {
         navigate('/Cadastro', { state: { userInfo, tokenResponse } });
       } else {
-        console.error('Error retrieving user data:', error);
+        toast.error('Erro ao realizar cadastro. Tente novamente mais tarde.');
+        setUser(null);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("userId");
+        googleLogout();
+        navigate('/');
       }
     }
   }

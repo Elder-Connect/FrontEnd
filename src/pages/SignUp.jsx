@@ -1,15 +1,13 @@
-import { React, useContext, useState } from 'react'
+import { React, useState } from 'react'
 import Header from '../components/Header/Header'
 import './Sign.css'
 import SignImage from '../assets/img/sign.svg'
 import { useNavigate, useLocation } from 'react-router-dom';
 import api from '../services/api';
 import axios from 'axios';
-import { UserContext } from '../App';
 
 function SignUp() {
   const navigate = useNavigate();
-  const { user, setUser } = useContext(UserContext);
   const { tokenResponse } = useLocation().state;
   const { userInfo } = useLocation().state;
   const [usuarioFormData, setUsuarioFormData] = useState({

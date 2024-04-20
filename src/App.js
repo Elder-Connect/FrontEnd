@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Router from "./Router";
 import auth from "./services/auth";
 export const UserContext = React.createContext(null);
@@ -12,8 +14,14 @@ function App() {
     const fetchUserData = async () => {
       const accessToken = localStorage.getItem("accessToken");
       if (accessToken) {
-        const userData = await auth(accessToken);
-        setUser(userData);
+        try{
+          setUser(await auth(accessToken));
+        }catch(error){
+          toast.error("Sessão expirada. Faça login novamente.");
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("userId");
+          return;
+        }
       }
     };
 
@@ -27,6 +35,7 @@ function App() {
           <Router />
         </UserContext.Provider>
       </GoogleOAuthProvider>
+      <ToastContainer position="bottom-center" autoClose={7500} newestOnTop theme="colored" />
     </div>
   );
 }
