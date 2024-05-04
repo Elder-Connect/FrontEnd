@@ -1,0 +1,7 @@
+input{
+    padding: 1.2em 1em;
+    width: 20vw;
+    outline: none;
+    border-radius: 5px;
+    border: solid 1px var(--black);
+}
