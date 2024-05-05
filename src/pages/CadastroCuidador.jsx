@@ -9,8 +9,7 @@ function CadastroCuidador() {
             <Header />
 
             <div className='container'>
-                <h1>Cadastro</h1>
-                <p>Cadastre um cuidador</p>
+                <h1>Cadastro de Cuidador</h1>
 
                 <form>
                     <div className='formCadastro'>
