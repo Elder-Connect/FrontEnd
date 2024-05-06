@@ -4,23 +4,6 @@
   max-height: calc(100vh - 8em);
 }
 
-.formContainer,
-.imageContainer {
-  flex: 1;
-  padding: 2em;
-}
-
-.imageContainer {
-  border-radius: 16px 0px 0px 16px;
-  display: flex;
-  justify-content: center;
-}
-
-.imageContainer img {
-  width: 100%;
-  height: auto;
-}
-
 .formContainer {
   border-left: 0px;
   border-radius: 0px 16px 16px 0px;
@@ -65,9 +48,6 @@
 }
 
 @media screen and (max-width: 768px) {
-  .imageContainer {
-    display: none;
-  }
   .formContainer {
     border: 1px solid var(--white);
     border-radius: 16px;

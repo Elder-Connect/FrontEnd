@@ -4,8 +4,9 @@ import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import NotFound from './pages/NotFound';
 import Cuidadores from './pages/Cuidadores';
-import CadastroFamiliaIdoso from './pages/CadastroFamiliaIdoso';
+import Perfil from './pages/Perfil';
 import CadastroCuidador from './pages/CadastroCuidador';
+import Authentication from './services/Authentication';
 
 function Router() {
   return (
@@ -14,8 +15,8 @@ function Router() {
 				<Route path={"/"} element={<Home />} />
 				<Route path="/Cadastro" element={<SignUp />} />
         <Route path="/Cuidadores" element={<Cuidadores />} />
-        <Route path='/CadastroFamiliaIdoso' element={<CadastroFamiliaIdoso/>} />
-        <Route path='/CadastroCuidador' element={<CadastroCuidador/>}/>
+        <Route path='/Perfil' element={<Authentication><Perfil/></Authentication>} />
+        <Route path='/CadastroCuidador' element={<Authentication><CadastroCuidador/></Authentication>}/>
 				<Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

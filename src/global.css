@@ -4,6 +4,7 @@
   --primary-medium: hsl(204, 93%, 84%);
   --secondary: hsl(40, 100%, 50%);
   --black: hsl(232, 13%, 23%);
+  --input-text: hsl(231, 13%, 50%);
   --subtitle: hsl(232, 3%, 75%);
   --white: hsl(0, 0%, 90%);
 }

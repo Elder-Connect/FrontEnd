@@ -32,7 +32,7 @@ function Header() {
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        navigate('/Cadastro', { state: { userInfo, tokenResponse } });
+        navigate('/Perfil', { state: { tokenResponse: tokenResponse, userInfo: userInfo } });
       } else {
         toast.error('Erro ao realizar cadastro. Tente novamente mais tarde.');
         setUser(null);

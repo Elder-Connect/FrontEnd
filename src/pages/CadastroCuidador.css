@@ -3,22 +3,10 @@
     margin-bottom: 0;
 }
 
-.container p{
-    color: var(--black);
-}
-
-form select{
-    padding: 1.2em 1em;
-    width: 22vw;
-    outline: none;
-    border-radius: 5px;
-    border: solid 1px var(--black);
-}
-
 .formCadastro .formColuna{
     display: flex;
     flex-direction: column;
-    gap: 3vh;
+    gap: 2vh;
 }
 
 .inputClass{
@@ -32,13 +20,4 @@ form select{
 .formLinha{
     display: flex;
     gap: 3vw;
-}
-
-.btn{
-    width: 35vw;
-}
-
-div p{
-    margin-bottom: 1vh;
-    font-size: 13px;
 }
