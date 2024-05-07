@@ -32,11 +32,11 @@ function Card() {
             </div>
           </div>
           <div className="description">
-            <p>Sou uma pessoa dedicada e experiente, comprometida em proporcionar cuidados compassivos e de qualidade para seus entes queridos. Com habilidades abrangentes em assistência diária, incluindo higiene pessoal, alimentação e administração de medicamentos, garanto um ambiente seguro e acolhedor, promovendo o bem-estar físico e emocional dos idosos sob meus cuidados.</p>
+            <p >Sou uma pessoa dedicada e experiente, comprometida em proporcionar cuidados compassivos e de qualidade para seus entes queridos. Com habilidades abrangentes em assistência diária, incluindo higiene pessoal, alimentação e administração de medicamentos, garanto um ambiente seguro e acolhedor, promovendo o bem-estar físico e emocional dos idosos sob meus cuidados.</p>
           </div>
           <div className="cardFooter">
             <div className="price">
-              <p>R$ 150 /hora</p>
+              <p style={{fontSize: '16px'}}>R$ 150 /hora</p>
             </div>
             <button className="btn" onClick={() => navigate("/Entrar")}>Conversar</button>
           </div>
