@@ -9,7 +9,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 function Perfil() {
-    const { user, setUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const navigate = useNavigate();
     const location = useLocation();
     const [ formData, setFormData ] = useState({
@@ -79,6 +79,7 @@ function Perfil() {
                 const response = await api.put(`/usuarios/${localStorage.getItem('userId')}`, formData);
                 if (response.status === 200) {
                     toast.success('Usuário atualizado com sucesso');
+                    navigate('/Cuidadores');
                 }
             } catch (error) {
                 toast.error('Falha ao atualizar usuário');
@@ -108,16 +109,7 @@ function Perfil() {
         }
     };
 
-    function formatDate(dateString) {
-        const parts = dateString.split('/');
-        
-        const date = new Date(parts[2], parts[1] - 1, parts[0]);
-        
-        const isoString = date.toISOString();
-        
-        return isoString;
-    }
-    
+    //TODO formatDataNascimento
 
     const handleDocumentChange = (event) => {
         const { value } = event.target;
