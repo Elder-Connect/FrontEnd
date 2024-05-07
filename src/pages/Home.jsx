@@ -80,7 +80,7 @@ function Home() {
 
         <div className='conteudoValores1'>
           <div className='confiancaTransparencia'>
-            <h2 className='textoCor' style={{marginBottom: "2em"}}>Confiança e Transparência</h2>
+            <h2 className='textoCor2' style={{marginBottom: "2em"}}>Confiança e Transparência</h2>
             <p className='textoValores textoLeft'>Prezamos pela comunicação aberta entre os familiares e os cuidadores, buscando uma relação firme para auxiliar nesse momento tão importante.</p>
           </div>
           <img src={HomeImage4} alt="Ilustração Home" />
@@ -88,7 +88,7 @@ function Home() {
 
         <div className='conteudoValores2'>
           <div className='respeitoDignidade'>
-            <h2 className='textoCor'style={{marginBottom: "2em"}}>Respeito e Dignidade</h2>
+            <h2 className='textoCor2'style={{marginBottom: "2em"}}>Respeito e Dignidade</h2>
             <p className='textoValores'style={{alignSelf: 'end'}}>Sabemos que cada um tem sua individualidade, e nós valorizamos isso para te ajudar a encontrar a pessoa certa para o seu cenário.</p>
           </div>
           <img src={HomeImage5} alt="Ilustração Home" />
@@ -96,7 +96,7 @@ function Home() {
 
         <div className='conteudoValores3'>
           <div className='qualidadeEficiencia'>
-            <h2 className='textoCor'style={{marginBottom: "2em"}}>Qualidade e Eficiência</h2>
+            <h2 className='textoCor2'style={{marginBottom: "2em"}}>Qualidade e Eficiência</h2>
             <p className='textoValores textoLeft'>Visamos garantir que cada atendimento seja realizado com excelência, e com isso promover o bem-estar e segurança para o idoso. Oferecemos uma plataforma segura, fácil e descomplicada para satisfazer todas as partes envolvidas.</p>
           </div>
           <img src={HomeImage6} alt="Ilustração Home" />

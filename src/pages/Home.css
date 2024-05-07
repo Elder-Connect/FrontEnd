@@ -31,17 +31,19 @@
 
 .titulo1{
     margin: 0;
+    font-size: 48px;
 }
 
 .titulo2{
     color: var(--primary);
-    font-size: 50px; 
+    font-size: 56px; 
     margin-top: 0px;
 }
 
 .fraseEfeito{
     text-wrap: balance;
     margin-bottom: 2em;
+    font-size: 24px;
 }
 
 .bloco{
@@ -53,7 +55,7 @@
 .question h2{
     color: var(--black);
     font-weight: 600;
-    font-size: 2em;
+    font-size: 32px;
 }
 
 .conteudoEspera{
@@ -83,6 +85,7 @@
 
 .textoCor{
     color: var(--primary);
+    font-size: 24px;
 }
 
 .conteudoQuemSomos{
@@ -91,6 +94,7 @@
 
 .conteudoQuemSomos p{
     text-align: center;
+    font-size: 24px;
 }
 
 .imageContainer3 img{
@@ -116,7 +120,7 @@
 }
 
 .btn{
-    font-size: 1.25em;
+    font-size: 24px;
 }
 
 .conteudoValores1, 
@@ -155,4 +159,10 @@
 
 .textoLeft{
     text-align: left;
+    font-size: 24px;
+}
+
+.textoCor2{
+    color: var(--primary);
+    font-size: 32px;
 }
