@@ -74,6 +74,10 @@ p, h3 {
   flex: 1;
 }
 
+.description p {
+  font-size: 16px;
+}
+
 .cardFooter{
   display: flex;
   justify-content: space-between;

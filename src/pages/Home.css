@@ -1,0 +1,168 @@
+.containerHome{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 90%;
+    height: calc(100% - 6em);
+}
+
+.conteudo {
+    display: flex;
+    margin: 0 auto;
+    height: 80vh;
+    width: 100%;
+    justify-content: space-between;
+    margin: 3vh 0vh 3vh 0vh;
+}
+
+.introduction{
+    width: 50vw;
+    display: flex;
+    align-items: center;
+}
+
+.imageContainer1{
+    display: flex;
+    justify-content: right;
+    width: 40vw;
+}
+
+.titulo1{
+    margin: 0;
+    font-size: 48px;
+}
+
+.titulo2{
+    color: var(--primary);
+    font-size: 56px; 
+    margin-top: 0px;
+}
+
+.fraseEfeito{
+    text-wrap: balance;
+    margin-bottom: 2em;
+    font-size: 24px;
+}
+
+.bloco{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.question h2{
+    color: var(--black);
+    font-weight: 600;
+    font-size: 32px;
+}
+
+.conteudoEspera{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    margin: 3vh 0vh 3vh 0vh;
+    gap: 3em;
+}
+
+.imageContainer2{
+    width: 50%;
+}
+
+.imageContainer2 img{
+    height: auto;
+}
+
+.textoEspera{
+    width: 50%;
+    font-size: 24px;
+    text-align: right;
+    text-wrap: balance;
+}
+
+.textoCor{
+    color: var(--primary);
+    font-size: 24px;
+}
+
+.conteudoQuemSomos{
+    margin: 3vh 0vh 3vh 0vh;
+}
+
+.conteudoQuemSomos p{
+    text-align: center;
+    font-size: 24px;
+}
+
+.imageContainer3 img{
+    height: 65vh;
+}
+
+.textoImage{
+    display: flex;
+    flex-direction: row;
+    margin: 3vh 0vh 3vh 0vh;
+}
+.textoQuem{
+    align-self: center;
+    font-size: 24px;
+    color: var(--black);
+    line-height: 1.5em
+}
+
+.botaoFacaParte{
+    display: flex;
+    justify-content: center;
+    margin: 3vh 0vh 3vh 0vh;
+}
+
+.title .btn{
+    font-size: 1.25em;
+}
+
+.conteudoValores1, 
+.conteudoValores3{
+    display: flex;
+    flex-direction: row;
+    gap: 3em;
+}
+
+.conteudoValores2{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 3em;
+}
+.respeitoDignidade .textoCor2{
+    text-align: end;
+}
+
+.confiancaTransparencia, .respeitoDignidade, .qualidadeEficiencia{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.confiancaTransparencia img, .respeitoDignidade img, .qualidadeEficiencia img{
+    width: 100%;
+    height: auto;
+}
+
+.textoValores{
+    color: var(--black);
+    font-size: 24px;
+    width: 75%;
+    text-align: right;
+}
+
+.textoLeft{
+    text-align: left;
+    font-size: 24px;
+}
+
+.textoCor2{
+    color: var(--primary);
+    font-size: 32px;
+}

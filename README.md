@@ -1,70 +1,75 @@
-# Getting Started with Create React App
+# Elder.ly - FrontEnd
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Bem-vindo ao Elder.ly, uma plataforma projetada para ajudar famílias a encontrar cuidadores para seus entes queridos. Este README irá guiá-lo através das funcionalidades do nosso projeto frontend React construído usando Create React App.
 
-## Available Scripts
+<p align="center">
+  <img src="https://i.imgur.com/2W4Xsis.png" alt="Elder.ly Logo">
+</p>
 
-In the project directory, you can run:
+## Funcionalidades
 
-### `npm start`
+### 1. Encontrar Cuidadores
+O Elder.ly fornece uma interface amigável para as famílias pesquisarem e descobrirem cuidadores com base em suas necessidades e preferências específicas. Os usuários podem filtrar os cuidadores com base em critérios como localização, experiência, disponibilidade e muito mais.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![Tela para encontrar cuidadores](https://i.imgur.com/BxqpskQ.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 2. Conversar com Cuidadores
+A comunicação é fundamental quando se trata de cuidados. O Elder.ly possui um sistema de chat integrado que permite que as famílias e os cuidadores se comuniquem de forma eficiente. Os usuários podem discutir planos de cuidados, horários e qualquer outra informação relevante de forma segura dentro da plataforma.
 
-### `npm test`
+![Tela de chat](https://i.imgur.com/I6liJzJ.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 3. Gerenciar Serviços com Google Agenda
+Manter o controle dos horários de cuidados pode ser desafiador. O Elder.ly simplifica esse processo integrando-se ao Google Agenda. Os usuários podem gerenciar e organizar facilmente os compromissos de cuidados, definir lembretes e sincronizar horários em todos os dispositivos.
 
-### `npm run build`
+![Integração com Google Agenda]()
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 4. Entrar com o Google
+O Elder.ly oferece uma experiência de login sem interrupções, permitindo que os usuários se autentiquem usando suas contas do Google. Isso elimina a necessidade de criar e lembrar credenciais de login adicionais, aumentando a conveniência e a segurança.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![Integração com Google]()
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 5. Registrar Cuidadores
+Os agentes podem registrar cuidadores sob sua supervisão no Elder.ly. Esse recurso permite que empresas ou indivíduos que gerenciam vários cuidadores simplifiquem o processo de integração e gerenciem eficientemente sua força de trabalho.
 
-### `npm run eject`
+![Tela de registro de cuidadores](https://i.imgur.com/hgomzBq.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 6. Painel para Agentes de Cuidadores
+O Elder.ly fornece um painel abrangente para agentes de cuidadores monitorarem e rastrearem o desempenho de seus cuidadores. Os agentes podem visualizar horários de trabalho, acompanhar compromissos e analisar os lucros do negócio, facilitando o gerenciamento e a tomada de decisões eficazes.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![Dashboard]()
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Começando
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Para executar o Elder.ly localmente em sua máquina, siga estas etapas:
 
-## Learn More
+1. Clone este repositório em sua máquina local:
+```bash
+git clone https://github.com/Elder-ly/FrontEnd
+```
+2. Navegue até o diretório do projeto:
+```bash
+cd frontend
+```
+3. Instale as dependências:
+```bash
+npm i
+```
+4. Inicie o servidor de desenvolvimento:
+```
+npm start
+```
+5. Abra seu navegador e visite `http://localhost:3000` para visualizar o Elder.ly.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Contribuindo
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Agradecemos contribuições da comunidade para ajudar a melhorar o Elder.ly. Se você encontrar bugs ou tiver sugestões para novos recursos, por favor, envie um problema ou uma solicitação de recebimento. Seu feedback é valioso e nos ajudará a tornar o Elder.ly ainda melhor.
 
-### Code Splitting
+## Licença
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Este projeto é disponibilizado sob a [Licença CC0 1.0 Universal](LICENSE).
 
-### Analyzing the Bundle Size
+## Contato
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Para quaisquer dúvidas ou suporte, entre em contato conosco em [elderly.noreply@gmail.com](mailto:elderly.noreply@gmail.com).
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Obrigado por escolher o Elder.ly! Esperamos que isso o ajude a encontrar os melhores cuidados para seus entes queridos.

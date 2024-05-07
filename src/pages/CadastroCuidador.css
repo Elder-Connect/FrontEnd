@@ -1,0 +1,23 @@
+.container h1{
+    font-size: 30px;
+    margin-bottom: 0;
+}
+
+.formCadastro .formColuna{
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.inputClass{
+    width: 35vw;
+}
+
+.inputMenor{
+    width: 16vw;
+}
+
+.formLinha{
+    display: flex;
+    gap: 3vw;
+}
