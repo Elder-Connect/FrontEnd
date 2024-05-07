@@ -78,7 +78,7 @@
 
 .textoEspera{
     width: 50%;
-    font-size: 1.25em;
+    font-size: 24px;
     text-align: right;
     text-wrap: balance;
 }
@@ -119,8 +119,8 @@
     margin: 3vh 0vh 3vh 0vh;
 }
 
-.btn{
-    font-size: 24px;
+.title .btn{
+    font-size: 1.25em;
 }
 
 .conteudoValores1, 
@@ -152,7 +152,7 @@
 
 .textoValores{
     color: var(--black);
-    font-size: 20px;
+    font-size: 24px;
     width: 75%;
     text-align: right;
 }
