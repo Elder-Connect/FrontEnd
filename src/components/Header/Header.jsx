@@ -21,8 +21,10 @@ function Header() {
     onError: errorResponse => console.log(errorResponse),
   });
   async function handleLogin(tokenResponse){
+    console.log("JWT Para login com o Google: ", tokenResponse)
     const userInfo = await auth(tokenResponse.access_token);
     setUser(userInfo);
+    console.log("Usuário logado: ", userInfo);
     
     try {
       const response = await api.get(`/usuarios/email/${userInfo.email}`);

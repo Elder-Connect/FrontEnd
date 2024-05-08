@@ -9,7 +9,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 function Perfil() {
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const location = useLocation();
     const [ formData, setFormData ] = useState({
@@ -17,8 +17,8 @@ function Perfil() {
         email: "",
         documento: "",
         dataNascimento: "",
-        tipoUsuario: "",
-        genero: "",
+        tipoUsuario: 3,
+        genero: 1,
         endereco: {
             cep: "",
             logradouro: "",
@@ -72,7 +72,7 @@ function Perfil() {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-
+        
         //Atualizar usuário
         if(localStorage.getItem('userId')) {
             try {
@@ -87,27 +87,45 @@ function Perfil() {
             }
             return;
         }
-
+        
         //Cadastrar Usuário
-        let tempTipoUsuario = formData.especialidades.length === 0 ? 3 : 2;
-        setFormData((prevState) => ({
-            ...prevState,
-            tipoUsuario: tempTipoUsuario
-        }));
-        let url = formData.tipoUsuario === 3 ? '/usuarios/cliente' : '/usuarios/colaborador';
-    
+        // let tempTipoUsuario = formData.especialidades.length === 0 ? 3 : 2;
+        // let tempTipoUsuario = 2;
+        // setFormData((prevState) => ({
+        //     ...prevState,
+        //     tipoUsuario: tempTipoUsuario
+        // }));
+        // let url = formData.tipoUsuario === 3 ? '/usuarios/cliente' : '/usuarios/colaborador';
+        let url = '/usuarios/cliente';
+        
         try {
             const response = await api.post(url, formData);
             if (response.status === 201) {
                 navigate('/Cuidadores');
                 localStorage.setItem('accessToken', tokenResponse.access_token);
                 localStorage.setItem('userId', response.data.id);
+                toast.success('Usuário cadastrado com sucesso');
             }
         } catch (error) {
             toast.error('Falha ao cadastrar usuário');
             console.error('Failed to sign up:', error);
         }
     };
+
+    const deleteUser = async () => {
+        try {
+            const response = await api.delete(`/usuarios/${localStorage.getItem('userId')}`);
+            if (response.status === 404 || response.status === 204) {
+                toast.success('Usuário excluído com sucesso');
+                setUser(null);
+                localStorage.removeItem("accessToken");
+                localStorage.removeItem("userId");
+                navigate('/');
+            }
+        } catch (error) {
+            console.error('Failed to delete user:', error);
+        }
+    }
 
     //TODO formatDataNascimento
 
@@ -270,7 +288,7 @@ function Perfil() {
 
                             <div className='formColuna'>
                                 <Input name="email" value={formData.email} onChange={handleInputChange} label="Email" placeholder="John.doe@example.com" />
-                                <Input name="dataNascimento" value={formData.dataNascimento} onChange={handleInputChange} label="Data de Nascimento" placeholder="01/01/1990" />
+                                <Input name="dataNascimento" value={formData.dataNascimento} onChange={handleInputChange} label="Data de Nascimento" placeholder="1990-12-31" />
                             </div>
                         </div>
 
@@ -308,7 +326,7 @@ function Perfil() {
                                         <option value="RO">Rondônia (RO)</option>
                                         <option value="RR">Roraima (RR)</option>
                                         <option value="SC">Santa Catarina (SC)</option>
-                                        <option value="SP">São Paulo (SP)</option>
+                                        <option selected="selected" value="SP">São Paulo (SP)</option>
                                         <option value="SE">Sergipe (SE)</option>
                                         <option value="TO">Tocantins (TO)</option>
                                     </select>
@@ -351,7 +369,12 @@ function Perfil() {
                             </div>
                         }
                     </div>
-                    <button className='btn' type='submit'>Salvar</button>
+                    <div style={{display: 'flex', gap: '1em'}}>
+                        <button className='btn' type='submit'>Salvar</button>
+                        { localStorage.getItem('userId') &&
+                            <button onClick={() => deleteUser()} className='btnDelete'>Excluir Usuário</button>
+                        }
+                    </div>
                 </form>
             </div>
         </>

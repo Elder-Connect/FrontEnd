@@ -20,7 +20,7 @@ function Home() {
         <div className='conteudo'>
           <div className='introduction'>
             <div className='Title'>
-              <h1 className='titulo1'>Cuidado do que importa,</h1>
+              <h1 className='titulo1'>Cuidando de quem importa,</h1>
               <h1 className='titulo2'>Para você.</h1>
 
               <p className='fraseEfeito'>Nossos profissionais são treinados e qualificados para atender o que mais importa para você com excelência e sabedoria, quando, onde e como quiser!</p>
