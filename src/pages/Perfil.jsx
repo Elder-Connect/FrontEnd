@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Header from '../components/Header/Header';
-import './Perfil.css'
-import Input from '../components/Input/Input'
+import './Perfil.css';
+import Input from '../components/Input/Input';
 import { UserContext } from '../App';
 import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../services/api';
@@ -26,7 +26,7 @@ function Perfil() {
             numero: "",
             complemento: "",
             cidade: "",
-            uf: ""
+            uf: "SP"
         },
         especialidades: []
     });
@@ -148,7 +148,7 @@ function Perfil() {
             documento: maskedValue,
         }));
     }
-
+    
     const handleCepChange = async (event) => {
         const { value } = event.target;
         let maskedValue = value;
@@ -185,7 +185,7 @@ function Perfil() {
             }));
         }
     };
-
+    
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         if (name.includes('endereco.')) {
@@ -205,11 +205,29 @@ function Perfil() {
         }
     };
     
-
+    const handleEstadoChange = (event) => {
+        const selectedUF = event.target.value;
+        setFormData(prevState => ({
+            ...prevState,
+            endereco: {
+                ...prevState.endereco,
+                uf: selectedUF
+            }
+        }));
+    };
+    
+    const handleGeneroChange = (event) => {
+        const generoValue = parseInt(event.target.value);
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            genero: generoValue
+        }));
+    };
+    
     const handleSectionChange = (section) => {
         const sections = ['informacoesPessoais', 'endereco', 'especialidades'];
         const index = sections.indexOf(section);
-
+    
         function removeFocus() {
             document.getElementById('informacoesPessoaisBtn').style.boxShadow = 'none';
             document.getElementById('informacoesPessoaisBtn').style.color = 'var(--black)';
@@ -220,7 +238,7 @@ function Perfil() {
                 document.getElementById('especialidadesBtn').style.color = 'var(--black)';
             }
         }
-
+    
         if (index === 0) {
             removeFocus();
             document.getElementById('informacoesPessoais').style.display = 'flex';
@@ -247,7 +265,7 @@ function Perfil() {
             document.getElementById('especialidadesBtn').style.boxShadow = 'inset 0px -2px 0px 0px var(--primary)';
             document.getElementById('especialidadesBtn').style.color = 'var(--primary)';
         }
-    }
+    };
 
     return (
         <>
@@ -278,7 +296,7 @@ function Perfil() {
                                 <Input name="documento" value={formData.documento} onChange={handleDocumentChange} label="Documento(CPF/CNPJ)" placeholder="153.436.719-10" />
                                 <div>
                                     <p>Gênero</p>
-                                    <select value={formData.genero} name='genero' onChange={handleInputChange}>
+                                    <select value={formData.genero} onChange={handleGeneroChange}>
                                         <option value="3">Prefiro não informar</option>
                                         <option value="2">Feminino</option>
                                         <option value="1">Masculino</option>
@@ -300,7 +318,7 @@ function Perfil() {
 
                                 <div>
                                     <p>Estado</p>
-                                    <select>
+                                    <select value={formData.endereco.uf} onChange={handleEstadoChange}>
                                         <option disabled value="">Selecione</option>
                                         <option value="AC">Acre (AC)</option>
                                         <option value="AL">Alagoas (AL)</option>
@@ -326,7 +344,7 @@ function Perfil() {
                                         <option value="RO">Rondônia (RO)</option>
                                         <option value="RR">Roraima (RR)</option>
                                         <option value="SC">Santa Catarina (SC)</option>
-                                        <option selected="selected" value="SP">São Paulo (SP)</option>
+                                        <option value="SP">São Paulo (SP)</option>
                                         <option value="SE">Sergipe (SE)</option>
                                         <option value="TO">Tocantins (TO)</option>
                                     </select>
