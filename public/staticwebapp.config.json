@@ -1,0 +1,24 @@
+{
+    "routes": [
+        {
+            "route": "/",
+            "rewrite": "/index.html"
+        },
+        {
+            "route": "/Cuidadores",
+            "rewrite": "/index.html"
+        },
+        {
+            "route": "/Perfil",
+            "rewrite": "/index.html"
+        },
+        {
+            "route": "/CadastroCuidador",
+            "rewrite": "/index.html"
+        },
+        {
+            "route": "/**",
+            "rewrite": "/index.html"
+        }
+    ]
+}
