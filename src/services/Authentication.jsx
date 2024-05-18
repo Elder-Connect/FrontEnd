@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../App";
 
-const Authentication = ({ children }) => {
+const Authentication = ({ children, userType }) => {
   const { user } = useContext(UserContext);
 
   if (user === undefined) {
@@ -13,6 +13,10 @@ const Authentication = ({ children }) => {
   }
 
   if (!user || user === null) {
+    return <Navigate to="/" />;
+  }
+
+  if(userType && user.tipoUsuario !== userType){
     return <Navigate to="/" />;
   }
 
