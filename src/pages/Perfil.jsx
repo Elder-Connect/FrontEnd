@@ -3,6 +3,7 @@ import Header from '../components/Header/Header';
 import './Perfil.css';
 import Input from '../components/Input/Input';
 import { UserContext } from '../App';
+import { USERTYPE, GENDER } from '../services/enums';
 import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import axios from 'axios';
@@ -17,8 +18,8 @@ function Perfil() {
         email: "",
         documento: "",
         dataNascimento: "",
-        tipoUsuario: 3,
-        genero: 1,
+        tipoUsuario: USERTYPE.CLIENTE,
+        genero: GENDER.MASCULINO,
         endereco: {
             cep: "",
             logradouro: "",
@@ -233,7 +234,7 @@ function Perfil() {
             document.getElementById('informacoesPessoaisBtn').style.color = 'var(--black)';
             document.getElementById('enderecoBtn').style.boxShadow = 'none';
             document.getElementById('enderecoBtn').style.color = 'var(--black)';
-            if(formData.tipoUsuario === 2){
+            if(formData.tipoUsuario === USERTYPE.CUIDADOR){
                 document.getElementById('especialidadesBtn').style.boxShadow = 'none';
                 document.getElementById('especialidadesBtn').style.color = 'var(--black)';
             }
@@ -245,7 +246,7 @@ function Perfil() {
             document.getElementById('informacoesPessoaisBtn').style.boxShadow = 'inset 0px -2px 0px 0px var(--primary)';
             document.getElementById('informacoesPessoaisBtn').style.color = 'var(--primary)';
             document.getElementById('endereco').style.display = 'none';
-            if(formData.tipoUsuario === 2) {
+            if(formData.tipoUsuario === USERTYPE.CUIDADOR) {
                 document.getElementById('especialidades').style.display = 'none';
             }
         } else if (index === 1) {
@@ -254,7 +255,7 @@ function Perfil() {
             document.getElementById('endereco').style.display = 'flex';
             document.getElementById('enderecoBtn').style.boxShadow = 'inset 0px -2px 0px 0px var(--primary)';
             document.getElementById('enderecoBtn').style.color = 'var(--primary)';
-            if(formData.tipoUsuario === 2){
+            if(formData.tipoUsuario === USERTYPE.CUIDADOR){
                 document.getElementById('especialidades').style.display = 'none';
             }
         } else {
@@ -280,7 +281,7 @@ function Perfil() {
                     <nav>
                         <button className='navigationBtn' id='informacoesPessoaisBtn' onClick={() => handleSectionChange('informacoesPessoais')} >Informações Pessoais</button>
                         <button className='navigationBtn' id='enderecoBtn' onClick={() => handleSectionChange('endereco')}>Endereço</button>
-                        {formData.tipoUsuario === 2 && 
+                        {formData.tipoUsuario === USERTYPE.CUIDADOR && 
                             <button className='navigationBtn' id='especialidadesBtn' onClick={() => handleSectionChange('especialidades')}>Especialidades</button>
                         }
                     </nav>
@@ -297,9 +298,9 @@ function Perfil() {
                                 <div>
                                     <p>Gênero</p>
                                     <select value={formData.genero} onChange={handleGeneroChange}>
-                                        <option value="3">Prefiro não informar</option>
-                                        <option value="2">Feminino</option>
-                                        <option value="1">Masculino</option>
+                                        <option value={GENDER.OUTRO}>Prefiro não informar</option>
+                                        <option value={GENDER.FEMENINO}>Feminino</option>
+                                        <option value={GENDER.MASCULINO}>Masculino</option>
                                     </select>
                                 </div>
                             </div>
@@ -314,7 +315,8 @@ function Perfil() {
                         <div className='inputWrapper' id="endereco">
                             <div className='formColuna'>
                                 <Input name="endereco.cep" value={formData.endereco.cep} onChange={handleCepChange} label="CEP" placeholder="463.23-010" />
-                                <Input name="endereco.numero" value={formData.endereco.numero} onChange={handleInputChange} label="Número" placeholder="534" />
+                                <Input name="endereco.logradouro" value={formData.endereco.logradouro} onChange={handleInputChange} label="Logradouro" placeholder="Rua de Baixo" />
+                                <Input name="endereco.bairro" value={formData.endereco.bairro} onChange={handleInputChange} label="Bairro" placeholder="Limoeiro" />
 
                                 <div>
                                     <p>Estado</p>
@@ -349,20 +351,17 @@ function Perfil() {
                                         <option value="TO">Tocantins (TO)</option>
                                     </select>
                                 </div>
-
-                                <Input name="endereco.bairro" value={formData.endereco.bairro} onChange={handleInputChange} label="Bairro" placeholder="Limoeiro" />
-
                             </div>
 
                             <div className='formColuna'>
-                                <Input name="endereco.logradouro" value={formData.endereco.logradouro} onChange={handleInputChange} label="Logradouro" placeholder="Rua de Baixo" />
+                                <Input name="endereco.numero" value={formData.endereco.numero} onChange={handleInputChange} label="Número" placeholder="534" />
                                 <Input name="endereco.complemento" value={formData.endereco.complemento} onChange={handleInputChange} label="Complemento" placeholder="2B" />
                                 <Input name="endereco.cidade" value={formData.endereco.cidade} onChange={handleInputChange} label="Cidade" placeholder="São Paulo" />
                             </div>
                         </div>
 
                         {/* Especialidades */}
-                        {formData.tipoUsuario === 2 && 
+                        {formData.tipoUsuario === USERTYPE.CUIDADOR && 
                             <div className='inputWrapper' id="especialidades">
                                 <div className='formColuna'>
                                     <div>
