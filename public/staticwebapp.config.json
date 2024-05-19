@@ -1,32 +1,9 @@
 {
-    "routes": [
-        {
-            "route": "/",
-            "rewrite": "/index.html"
-        },
-        {
-            "route": "/Cuidadores",
-            "rewrite": "/index.html"
-        },
-        {
-            "route": "/Perfil",
-            "rewrite": "/index.html"
-        },
-        {
-            "route": "/CadastroCuidador",
-            "rewrite": "/index.html"
-        },
-        {
-            "route": "/*",
-            "rewrite": "/index.html"
-        }
-    ],
-    "globalHeaders": {
-        "*.js": {
-            "content-type": "application/javascript"
-        },
-        "*.css": {
-            "content-type": "text/css"
-        }
+    "navigationFallback": {
+       "rewrite": "index.html",
+       "exclude": ["/static/media/*.{png,jpg,jpeg,gif,bmp}",   "/static/css/*"]
+    },
+    "mimeTypes": {
+        ".json": "text/json"
     }
 }
