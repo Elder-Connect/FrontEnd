@@ -48,24 +48,6 @@ form{
     justify-content: space-evenly;
 }
 
-select{
-    color: var(--black);
-    padding: 1.2em 1em;
-    width: 100%;
-    outline: none;
-    border-radius: 4px;
-    border: solid 1px var(--subtitle);
-    box-sizing: border-box;
-    transition: 0.2s;
-}
-
-select:focus{
-    outline: none;
-    border: 1px solid var(--primary);
-    box-shadow: inset 3px 0px 0px 0px var(--primary);
-    transition: 0.2s;
-}
-
 .inputWrapper, .formCadastro{
     width: 100%;
     display: flex;
