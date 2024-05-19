@@ -1,3 +1,7 @@
+.containerInput{
+    width: 100%;
+}
+
 p{
     margin-bottom: 1vh;
     font-size: 13px;
@@ -24,4 +28,26 @@ input:focus{
 
 input::placeholder {
     color: var(--input-text);
+}
+
+.labelContainer{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+input.error{
+    border: 1px solid var(--error);
+}
+
+p.error{
+    color: var(--error);
+}
+
+.text-error{
+    color: var(--error);
+}
+
+span{
+    color: var(--error);
 }
