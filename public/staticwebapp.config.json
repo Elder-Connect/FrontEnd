@@ -20,5 +20,13 @@
             "route": "/*",
             "rewrite": "/index.html"
         }
-    ]
+    ],
+    "globalHeaders": {
+        "*.js": {
+            "content-type": "application/javascript"
+        },
+        "*.css": {
+            "content-type": "text/css"
+        }
+    }
 }
