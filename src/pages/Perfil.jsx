@@ -3,10 +3,13 @@ import Header from '../components/Header/Header';
 import './Perfil.css';
 import Input from '../components/Input/Input';
 import { UserContext } from '../App';
+import { USERTYPE, GENDER, ufOptions, genderOptions } from '../services/enums';
 import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import axios from 'axios';
 import { toast } from 'react-toastify';
+import { handleCepChange, handleDocumentChange, handleInputChange, handleDataNascimento, validadeForm } from '../services/inputHandler';
+import Select from '../components/Select/Select';
+import SelectEspecialidades from '../components/Select/SelectEspecialidades';
 
 function Perfil() {
     const { user, setUser } = useContext(UserContext);
@@ -17,8 +20,8 @@ function Perfil() {
         email: "",
         documento: "",
         dataNascimento: "",
-        tipoUsuario: 3,
-        genero: 1,
+        tipoUsuario: USERTYPE.CLIENTE,
+        genero: GENDER.MASCULINO,
         endereco: {
             cep: "",
             logradouro: "",
@@ -28,6 +31,7 @@ function Perfil() {
             cidade: "",
             uf: "SP"
         },
+        biografia: "",
         especialidades: []
     });
 
@@ -72,6 +76,12 @@ function Perfil() {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
+
+        //Validar Formulário
+        if(!validadeForm()){
+            toast.error('Preencha todos os campos obrigatórios');
+            return;
+        }
         
         //Atualizar usuário
         if(localStorage.getItem('userId')) {
@@ -89,14 +99,12 @@ function Perfil() {
         }
         
         //Cadastrar Usuário
-        // let tempTipoUsuario = formData.especialidades.length === 0 ? 3 : 2;
-        // let tempTipoUsuario = 2;
-        // setFormData((prevState) => ({
-        //     ...prevState,
-        //     tipoUsuario: tempTipoUsuario
-        // }));
-        // let url = formData.tipoUsuario === 3 ? '/usuarios/cliente' : '/usuarios/colaborador';
-        let url = '/usuarios/cliente';
+        let tempTipoUsuario = formData.especialidades.length === 0 ? USERTYPE.CLIENTE : USERTYPE.CUIDADOR;
+        setFormData((prevState) => ({
+            ...prevState,
+            tipoUsuario: tempTipoUsuario
+        }));
+        let url = formData.tipoUsuario === USERTYPE.CLIENTE ? '/usuarios/cliente' : '/usuarios/colaborador';
         
         try {
             const response = await api.post(url, formData);
@@ -126,103 +134,6 @@ function Perfil() {
             console.error('Failed to delete user:', error);
         }
     }
-
-    //TODO formatDataNascimento
-
-    const handleDocumentChange = (event) => {
-        const { value } = event.target;
-        let maskedValue = value;
-        maskedValue = value.replace(/[^\d]/g, '');
-        if (maskedValue.length <= 11) {
-            maskedValue = maskedValue.replace(/^(\d{3})(\d)/, '$1.$2');
-            maskedValue = maskedValue.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
-            maskedValue = maskedValue.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
-        } else {
-            maskedValue = maskedValue.replace(/^(\d{2})(\d)/, '$1.$2');
-            maskedValue = maskedValue.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-            maskedValue = maskedValue.replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4');
-            maskedValue = maskedValue.replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5');
-        }
-        setFormData((prevState) => ({
-            ...prevState,
-            documento: maskedValue,
-        }));
-    }
-    
-    const handleCepChange = async (event) => {
-        const { value } = event.target;
-        let maskedValue = value;
-        maskedValue = maskedValue.replace(/\D/g, "");
-        maskedValue = maskedValue.replace(/(\d{5})(\d)/, "$1-$2");
-        if (maskedValue.length === 9) {
-            try {
-                const response = await axios.get(
-                `https://viacep.com.br/ws/${maskedValue}/json/`
-                );
-                const address = response.data;
-                setFormData((prevState) => ({
-                    ...prevState,
-                    endereco: {
-                        ...prevState.endereco,
-                        cep: maskedValue,
-                        logradouro: address.logradouro,
-                        bairro: address.bairro,
-                        cidade: address.localidade,
-                        uf: address.uf
-                    }
-                }));
-            } catch (error) {
-                toast.error('Falha ao buscar endereço');
-                console.log("Failed to fetch address:", error.message);
-            }
-        }else{
-            setFormData((prevState) => ({
-                ...prevState,
-                endereco: {
-                    ...prevState.endereco,
-                    cep: maskedValue
-                }
-            }));
-        }
-    };
-    
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        if (name.includes('endereco.')) {
-            const endereco = name.split('.')[1];
-            setFormData(prevFormData => ({
-                ...prevFormData,
-                endereco: {
-                    ...prevFormData.endereco,
-                    [endereco]: value
-                }
-            }));
-        } else {
-            setFormData(prevFormData => ({
-                ...prevFormData,
-                [name]: value
-            }));
-        }
-    };
-    
-    const handleEstadoChange = (event) => {
-        const selectedUF = event.target.value;
-        setFormData(prevState => ({
-            ...prevState,
-            endereco: {
-                ...prevState.endereco,
-                uf: selectedUF
-            }
-        }));
-    };
-    
-    const handleGeneroChange = (event) => {
-        const generoValue = parseInt(event.target.value);
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            genero: generoValue
-        }));
-    };
     
     const handleSectionChange = (section) => {
         const sections = ['informacoesPessoais', 'endereco', 'especialidades'];
@@ -233,7 +144,7 @@ function Perfil() {
             document.getElementById('informacoesPessoaisBtn').style.color = 'var(--black)';
             document.getElementById('enderecoBtn').style.boxShadow = 'none';
             document.getElementById('enderecoBtn').style.color = 'var(--black)';
-            if(formData.tipoUsuario === 2){
+            if(formData.tipoUsuario === USERTYPE.CUIDADOR){
                 document.getElementById('especialidadesBtn').style.boxShadow = 'none';
                 document.getElementById('especialidadesBtn').style.color = 'var(--black)';
             }
@@ -245,7 +156,7 @@ function Perfil() {
             document.getElementById('informacoesPessoaisBtn').style.boxShadow = 'inset 0px -2px 0px 0px var(--primary)';
             document.getElementById('informacoesPessoaisBtn').style.color = 'var(--primary)';
             document.getElementById('endereco').style.display = 'none';
-            if(formData.tipoUsuario === 2) {
+            if(formData.tipoUsuario === USERTYPE.CUIDADOR) {
                 document.getElementById('especialidades').style.display = 'none';
             }
         } else if (index === 1) {
@@ -254,7 +165,7 @@ function Perfil() {
             document.getElementById('endereco').style.display = 'flex';
             document.getElementById('enderecoBtn').style.boxShadow = 'inset 0px -2px 0px 0px var(--primary)';
             document.getElementById('enderecoBtn').style.color = 'var(--primary)';
-            if(formData.tipoUsuario === 2){
+            if(formData.tipoUsuario === USERTYPE.CUIDADOR){
                 document.getElementById('especialidades').style.display = 'none';
             }
         } else {
@@ -280,7 +191,7 @@ function Perfil() {
                     <nav>
                         <button className='navigationBtn' id='informacoesPessoaisBtn' onClick={() => handleSectionChange('informacoesPessoais')} >Informações Pessoais</button>
                         <button className='navigationBtn' id='enderecoBtn' onClick={() => handleSectionChange('endereco')}>Endereço</button>
-                        {formData.tipoUsuario === 2 && 
+                        {formData.tipoUsuario === USERTYPE.CUIDADOR && 
                             <button className='navigationBtn' id='especialidadesBtn' onClick={() => handleSectionChange('especialidades')}>Especialidades</button>
                         }
                     </nav>
@@ -292,97 +203,45 @@ function Perfil() {
                         {/* informações pessoais */}
                         <div className='inputWrapper' id="informacoesPessoais">
                             <div className='formColuna'>
-                                <Input name="nome" value={formData.nome} onChange={handleInputChange} label="Nome Completo" placeholder="John Richard Doe" />
-                                <Input name="documento" value={formData.documento} onChange={handleDocumentChange} label="Documento(CPF/CNPJ)" placeholder="153.436.719-10" />
-                                <div>
-                                    <p>Gênero</p>
-                                    <select value={formData.genero} onChange={handleGeneroChange}>
-                                        <option value="3">Prefiro não informar</option>
-                                        <option value="2">Feminino</option>
-                                        <option value="1">Masculino</option>
-                                    </select>
-                                </div>
+                                <Input name="nome" value={formData.nome} onChange={(e) => handleInputChange(e, setFormData)} label="Nome Completo" placeholder="John Richard Doe" mandatory />
+                                <Input name="documento" value={formData.documento} onChange={(e) => handleDocumentChange(e, setFormData)} label="Documento(CPF/CNPJ)" placeholder="153.436.719-10" mandatory />
+                                <Select name="genero" label="Gênero" value={formData.genero} options={genderOptions} onChange={(e) => handleInputChange(e, setFormData)} mandatory />
                             </div>
 
                             <div className='formColuna'>
-                                <Input name="email" value={formData.email} onChange={handleInputChange} label="Email" placeholder="John.doe@example.com" />
-                                <Input name="dataNascimento" value={formData.dataNascimento} onChange={handleInputChange} label="Data de Nascimento" placeholder="1990-12-31" />
+                                <Input name="email" value={formData.email} onChange={(e) => handleInputChange(e, setFormData)} label="Email" placeholder="John.doe@example.com" mandatory />
+                                <Input name="dataNascimento" value={formData.dataNascimento} onChange={(e) => handleDataNascimento(e, setFormData)} label="Data de Nascimento" placeholder="1990-12-31" mandatory />
                             </div>
                         </div>
 
                         {/* Endereço */}
                         <div className='inputWrapper' id="endereco">
                             <div className='formColuna'>
-                                <Input name="endereco.cep" value={formData.endereco.cep} onChange={handleCepChange} label="CEP" placeholder="463.23-010" />
-                                <Input name="endereco.numero" value={formData.endereco.numero} onChange={handleInputChange} label="Número" placeholder="534" />
-
-                                <div>
-                                    <p>Estado</p>
-                                    <select value={formData.endereco.uf} onChange={handleEstadoChange}>
-                                        <option disabled value="">Selecione</option>
-                                        <option value="AC">Acre (AC)</option>
-                                        <option value="AL">Alagoas (AL)</option>
-                                        <option value="AP">Amapá (AP)</option>
-                                        <option value="AM">Amazonas (AM)</option>
-                                        <option value="BA">Bahia (BA)</option>
-                                        <option value="CE">Ceará (CE)</option>
-                                        <option value="DF">Distrito Federal (DF)</option>
-                                        <option value="ES">Espírito Santo (ES)</option>
-                                        <option value="GO">Goiás (GO)</option>
-                                        <option value="MA">Maranhão (MA)</option>
-                                        <option value="MT">Mato Grosso (MT)</option>
-                                        <option value="MS">Mato Grosso do Sul (MS)</option>
-                                        <option value="MG">Minas Gerais (MG)</option>
-                                        <option value="PA">Pará (PA)</option>
-                                        <option value="PB">Paraíba (PB)</option>
-                                        <option value="PR">Paraná (PR)</option>
-                                        <option value="PE">Pernambuco (PE)</option>
-                                        <option value="PI">Piauí (PI)</option>
-                                        <option value="RJ">Rio de Janeiro (RJ)</option>
-                                        <option value="RN">Rio Grande do Norte (RN)</option>
-                                        <option value="RS">Rio Grande do Sul (RS)</option>
-                                        <option value="RO">Rondônia (RO)</option>
-                                        <option value="RR">Roraima (RR)</option>
-                                        <option value="SC">Santa Catarina (SC)</option>
-                                        <option value="SP">São Paulo (SP)</option>
-                                        <option value="SE">Sergipe (SE)</option>
-                                        <option value="TO">Tocantins (TO)</option>
-                                    </select>
-                                </div>
-
-                                <Input name="endereco.bairro" value={formData.endereco.bairro} onChange={handleInputChange} label="Bairro" placeholder="Limoeiro" />
-
+                                <Input name="endereco.cep" value={formData.endereco.cep} onChange={(e) => handleCepChange(e, setFormData)} label="CEP" placeholder="463.23-010" mandatory />
+                                <Input name="endereco.logradouro" value={formData.endereco.logradouro} onChange={(e) => handleInputChange(e, setFormData)} label="Logradouro" placeholder="Rua de Baixo" mandatory />
+                                <Input name="endereco.bairro" value={formData.endereco.bairro} onChange={(e) => handleInputChange(e, setFormData)} label="Bairro" placeholder="Limoeiro" mandatory />
+                                <Select name="endereco.uf" label="Estado" value={formData.endereco.uf} options={ufOptions} onChange={(e) => handleInputChange(e, setFormData)} mandatory />
                             </div>
 
                             <div className='formColuna'>
-                                <Input name="endereco.logradouro" value={formData.endereco.logradouro} onChange={handleInputChange} label="Logradouro" placeholder="Rua de Baixo" />
-                                <Input name="endereco.complemento" value={formData.endereco.complemento} onChange={handleInputChange} label="Complemento" placeholder="2B" />
-                                <Input name="endereco.cidade" value={formData.endereco.cidade} onChange={handleInputChange} label="Cidade" placeholder="São Paulo" />
+                                <Input name="endereco.numero" value={formData.endereco.numero} onChange={(e) => handleInputChange(e, setFormData)} label="Número" placeholder="534" mandatory />
+                                <Input name="endereco.complemento" value={formData.endereco.complemento} onChange={(e) => handleInputChange(e, setFormData)} label="Complemento" placeholder="2B" />
+                                <Input name="endereco.cidade" value={formData.endereco.cidade} onChange={(e) => handleInputChange(e, setFormData)} label="Cidade" placeholder="São Paulo" mandatory />
                             </div>
                         </div>
 
                         {/* Especialidades */}
-                        {formData.tipoUsuario === 2 && 
+                        {formData.tipoUsuario === USERTYPE.CUIDADOR && 
                             <div className='inputWrapper' id="especialidades">
                                 <div className='formColuna'>
-                                    <div>
-                                        <p>Especialidades</p>
-                                        <select>
-                                            <option value="">Bingo</option>
-                                            <option value="">Troca de Fralda</option>
-                                            <option value="">Salão de Beleza</option>
-                                            <option value="">Passeio</option>
-                                            <option value="">Medicação em casa</option>
-                                        </select>
-                                    </div>
+                                    <SelectEspecialidades value={formData.especialidades} setFormData={setFormData} />
                                 </div>
 
                                 <div className='formColuna'>
                                     <div>
                                         <p>Biografia</p>
-                                        <textarea id="input-text"></textarea>
+                                        <textarea id="input-text" name="biografia" value={formData.biografia} onChange={(e) => handleInputChange(e, setFormData)}></textarea>
                                     </div>
-
                                 </div>
                             </div>
                         }

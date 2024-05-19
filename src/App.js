@@ -7,7 +7,7 @@ import auth from "./services/auth";
 export const UserContext = React.createContext(null);
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined);
 
   // Google Auth
   useEffect(() => {
@@ -16,13 +16,14 @@ function App() {
       if (accessToken) {
         try{
           setUser(await auth(accessToken));
+          return;
         }catch(error){
           toast.error("Sessão expirada. Faça login novamente.");
           localStorage.removeItem("accessToken");
           localStorage.removeItem("userId");
-          return;
         }
       }
+      setUser(null);
     };
 
     fetchUserData();
@@ -35,7 +36,7 @@ function App() {
           <Router />
         </UserContext.Provider>
       </GoogleOAuthProvider>
-      <ToastContainer position="bottom-center" autoClose={7500} newestOnTop theme="colored" />
+      <ToastContainer position="bottom-center" autoClose={5000} newestOnTop theme="colored" />
     </div>
   );
 }

@@ -5,10 +5,9 @@
 p{
     margin-bottom: 1vh;
     font-size: 13px;
-    color: var(--black);
 }
 
-input{
+select{
     color: var(--black);
     padding: 1.2em 1em;
     width: 100%;
@@ -19,16 +18,16 @@ input{
     transition: 0.2s;
 }
 
-input:focus{
+select:focus{
     outline: none;
     border: 1px solid var(--primary);
     box-shadow: inset 3px 0px 0px 0px var(--primary);
     transition: 0.2s;
 }
 
-input::placeholder {
+/* select::placeholder {
     color: var(--input-text);
-}
+} */
 
 .labelContainer{
     display: flex;
@@ -36,7 +35,7 @@ input::placeholder {
     flex-direction: row;
 }
 
-input.error{
+select.error{
     border: 1px solid var(--error);
 }
 
