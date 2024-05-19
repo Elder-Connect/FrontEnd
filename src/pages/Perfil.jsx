@@ -9,6 +9,7 @@ import api from '../services/api';
 import { toast } from 'react-toastify';
 import { handleCepChange, handleDocumentChange, handleInputChange, handleDataNascimento, validadeForm } from '../services/inputHandler';
 import Select from '../components/Select/Select';
+import SelectEspecialidades from '../components/Select/SelectEspecialidades';
 
 function Perfil() {
     const { user, setUser } = useContext(UserContext);
@@ -30,6 +31,7 @@ function Perfil() {
             cidade: "",
             uf: "SP"
         },
+        biografia: "",
         especialidades: []
     });
 
@@ -232,24 +234,14 @@ function Perfil() {
                         {formData.tipoUsuario === USERTYPE.CUIDADOR && 
                             <div className='inputWrapper' id="especialidades">
                                 <div className='formColuna'>
-                                    <div>
-                                        <p>Especialidades</p>
-                                        <select>
-                                            <option value="">Bingo</option>
-                                            <option value="">Troca de Fralda</option>
-                                            <option value="">Salão de Beleza</option>
-                                            <option value="">Passeio</option>
-                                            <option value="">Medicação em casa</option>
-                                        </select>
-                                    </div>
+                                    <SelectEspecialidades value={formData.especialidades} setFormData={setFormData} />
                                 </div>
 
                                 <div className='formColuna'>
                                     <div>
                                         <p>Biografia</p>
-                                        <textarea id="input-text"></textarea>
+                                        <textarea id="input-text" name="biografia" value={formData.biografia} onChange={(e) => handleInputChange(e, setFormData)}></textarea>
                                     </div>
-
                                 </div>
                             </div>
                         }

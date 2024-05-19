@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import api from '../../services/api';
 
 const SelectEspecialidades = ({ value, setFormData }) => {
-    const [options, setOptions] = useState(["Carregando..."]);
+    const [options, setOptions] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState(value || []);
     const [searchText, setSearchText] = useState('');
     const [isFocused, setIsFocused] = useState(false);
@@ -17,6 +17,7 @@ const SelectEspecialidades = ({ value, setFormData }) => {
                 const response = await api.get('/especialidades');
                 setOptions(response.data.map((item) => item.nome));
             } catch (error) {
+                toast.error('Falha ao buscar especialidades');
                 console.error('Failed to fetch:', error);
             }
         };
