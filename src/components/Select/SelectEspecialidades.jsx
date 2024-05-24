@@ -65,7 +65,7 @@ const SelectEspecialidades = ({ value, setFormData }) => {
     };
 
     const filteredOptions = options.filter(option =>
-        option.toLowerCase().includes(searchText.toLowerCase())
+        option ? option.toLowerCase().includes(searchText.toLowerCase()) : false
     );
 
     return (
