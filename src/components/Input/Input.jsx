@@ -16,7 +16,8 @@ function Input(props){
             value={props.value}
             onChange={props.onChange}
             placeholder={props.placeholder}
-            className={classNames}/>
+            className={classNames}
+            disabled={props.disabled}/>
         </div>
     )
 }

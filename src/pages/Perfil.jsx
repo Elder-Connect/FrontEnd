@@ -209,7 +209,7 @@ function Perfil() {
                             </div>
 
                             <div className='formColuna'>
-                                <Input name="email" value={formData.email} onChange={(e) => handleInputChange(e, setFormData)} label="Email" placeholder="John.doe@example.com" mandatory />
+                                <Input name="email" value={formData.email} onChange={(e) => handleInputChange(e, setFormData)} label="Email" placeholder="John.doe@example.com" disabled mandatory />
                                 <Input name="dataNascimento" value={formData.dataNascimento} onChange={(e) => handleDataNascimento(e, setFormData)} label="Data de Nascimento" placeholder="1990-12-31" mandatory />
                             </div>
                         </div>

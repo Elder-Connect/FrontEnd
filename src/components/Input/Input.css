@@ -51,3 +51,7 @@ p.error{
 span{
     color: var(--error);
 }
+
+input:disabled {
+    color: var(--input-text);
+}
