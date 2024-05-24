@@ -23,6 +23,7 @@ function Perfil() {
         dataNascimento: "",
         tipoUsuario: USERTYPE.CLIENTE,
         genero: GENDER.MASCULINO,
+        fotoPerfil: user?.picture || '',
         endereco: {
             cep: "",
             logradouro: "",
