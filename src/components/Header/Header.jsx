@@ -1,12 +1,12 @@
 import { React, useContext } from 'react'
 import { UserContext } from '../../App'
-import { useGoogleLogin, googleLogout } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate } from "react-router-dom"
 import './Header.css'
 import Logo from '../../assets/img/logo.svg'
 import HeaderDropdown from './HeaderDropdown/HeaderDropdown'
 import GoogleBtn from './GoogleBtn/GoogleBtn';
-import auth from '../../services/auth';
+import { auth, logOff, setLocalStorage } from "../../services/auth";
 import api from '../../services/api';
 import { toast } from 'react-toastify';
 import { USERTYPE } from '../../services/enums';
@@ -28,9 +28,7 @@ function Header() {
     try {
       const response = await api.get(`/usuarios/email/${userInfo.email}`);
       if (response.status === 200) {
-        localStorage.setItem('accessToken', tokenResponse.access_token);
-        localStorage.setItem('userId', response.data.id);
-        localStorage.setItem("userType", response.data.tipoUsuario);
+        setLocalStorage(tokenResponse, response.data);
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -38,9 +36,7 @@ function Header() {
       } else {
         toast.error('Erro ao realizar cadastro. Tente novamente mais tarde.');
         setUser(null);
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("userId");
-        googleLogout();
+        logOff();
         navigate('/');
       }
     }

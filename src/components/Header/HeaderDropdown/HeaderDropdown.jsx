@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import './HeaderDropdown.css';
-import { googleLogout } from '@react-oauth/google';
 import { ReactComponent as LogoutIcon } from '@material-symbols/svg-600/rounded/logout-fill.svg';
 import { ReactComponent as ManageAccountIcon } from '@material-symbols/svg-600/rounded/manage_accounts-fill.svg';
 import { UserContext } from '../../../App';
+import { logOff } from '../../../services/auth';
 
 function HeaderDropdown() {
     const [isOpen, setIsOpen] = useState(false);
@@ -32,9 +32,7 @@ function HeaderDropdown() {
 
     const signOut = () => {
       setUser(null);
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("userId");
-      googleLogout();
+      logOff();
       navigate('/');
     };
   

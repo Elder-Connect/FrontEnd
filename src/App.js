@@ -3,7 +3,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Router from "./Router";
-import auth from "./services/auth";
+import { auth, logOff } from "./services/auth";
 export const UserContext = React.createContext(null);
 
 function App() {
@@ -19,8 +19,7 @@ function App() {
           return;
         }catch(error){
           toast.error("Sessão expirada. Faça login novamente.");
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("userId");
+          logOff();
         }
       }
       setUser(null);

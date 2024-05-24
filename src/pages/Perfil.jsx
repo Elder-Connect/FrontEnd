@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { handleCepChange, handleDocumentChange, handleInputChange, handleDataNascimento, validadeForm } from '../services/inputHandler';
 import Select from '../components/Select/Select';
 import SelectEspecialidades from '../components/Select/SelectEspecialidades';
+import { logOff, setLocalStorage } from '../services/auth';
 
 function Perfil() {
     const { user, setUser } = useContext(UserContext);
@@ -110,8 +111,7 @@ function Perfil() {
             const response = await api.post(url, formData);
             if (response.status === 201) {
                 navigate('/Cuidadores');
-                localStorage.setItem('accessToken', tokenResponse.access_token);
-                localStorage.setItem('userId', response.data.id);
+                setLocalStorage(tokenResponse, response.data);
                 toast.success('Usuário cadastrado com sucesso');
             }
         } catch (error) {
@@ -126,8 +126,7 @@ function Perfil() {
             if (response.status === 404 || response.status === 204) {
                 toast.success('Usuário excluído com sucesso');
                 setUser(null);
-                localStorage.removeItem("accessToken");
-                localStorage.removeItem("userId");
+                logOff();
                 navigate('/');
             }
         } catch (error) {
