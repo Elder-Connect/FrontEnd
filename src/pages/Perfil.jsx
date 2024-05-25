@@ -16,6 +16,7 @@ function Perfil() {
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const location = useLocation();
+    const [loading, setLoading] = useState(true);
     const [ formData, setFormData ] = useState({
         nome: "",
         email: "",
@@ -49,6 +50,7 @@ function Perfil() {
                 nome: userInfo.name,
                 email: userInfo.email,
             }));
+            setLoading(false);
         }else{
         //Usuário já existente
             api.get(`/usuarios/${localStorage.getItem('userId')}`).then((response) => {
@@ -72,6 +74,10 @@ function Perfil() {
                     },
                     especialidades: data?.especialidades || []
                 }));
+                setLoading(false);
+            }).catch((error) => {
+                console.error('Failed to fetch user:', error);
+                setLoading(false);
             });
         }
     }, [location]);
@@ -156,18 +162,14 @@ function Perfil() {
             document.getElementById('informacoesPessoaisBtn').style.boxShadow = 'inset 0px -2px 0px 0px var(--primary)';
             document.getElementById('informacoesPessoaisBtn').style.color = 'var(--primary)';
             document.getElementById('endereco').style.display = 'none';
-            if(formData.tipoUsuario === USERTYPE.CUIDADOR) {
-                document.getElementById('especialidades').style.display = 'none';
-            }
+            document.getElementById('especialidades').style.display = 'none';
         } else if (index === 1) {
             removeFocus();
             document.getElementById('informacoesPessoais').style.display = 'none';
             document.getElementById('endereco').style.display = 'flex';
             document.getElementById('enderecoBtn').style.boxShadow = 'inset 0px -2px 0px 0px var(--primary)';
             document.getElementById('enderecoBtn').style.color = 'var(--primary)';
-            if(formData.tipoUsuario === USERTYPE.CUIDADOR){
-                document.getElementById('especialidades').style.display = 'none';
-            }
+            document.getElementById('especialidades').style.display = 'none';
         } else {
             removeFocus();
             document.getElementById('informacoesPessoais').style.display = 'none';
@@ -231,20 +233,22 @@ function Perfil() {
                         </div>
 
                         {/* Especialidades */}
-                        {formData.tipoUsuario === USERTYPE.CUIDADOR && 
-                            <div className='inputWrapper' id="especialidades">
-                                <div className='formColuna'>
+                        <div className='inputWrapper' id="especialidades">
+                            <div className='formColuna'>
+                                {loading ? (
+                                    <p>Loading...</p> //TODO Loading component
+                                ) : (
                                     <SelectEspecialidades value={formData.especialidades} setFormData={setFormData} />
-                                </div>
+                                )}
+                            </div>
 
-                                <div className='formColuna'>
-                                    <div>
-                                        <p>Biografia</p>
-                                        <textarea id="input-text" name="biografia" value={formData.biografia} onChange={(e) => handleInputChange(e, setFormData)}></textarea>
-                                    </div>
+                            <div className='formColuna'>
+                                <div>
+                                    <p>Biografia</p>
+                                    <textarea id="input-text" name="biografia" value={formData.biografia} onChange={(e) => handleInputChange(e, setFormData)}></textarea>
                                 </div>
                             </div>
-                        }
+                        </div>
                     </div>
                     <div style={{display: 'flex', gap: '1em'}}>
                         <button className='btn' type='submit'>Salvar</button>
