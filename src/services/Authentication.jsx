@@ -16,7 +16,7 @@ const Authentication = ({ children, userType }) => {
     return <Navigate to="/" />;
   }
 
-  if(userType && localStorage.getItem("userType") !== userType){
+  if(userType && localStorage.getItem("userType") != userType){
     return <Navigate to="/" />;
   }
 
