@@ -53,7 +53,7 @@ function Header() {
           <button className='btnNoBg' onClick={() => navigate("/")}>Home</button>
           <button className='btnNoBg' onClick={() => navigate("/Cuidadores")}>Cuidadores</button>
           {user ? <button className='btnNoBg' onClick={() => navigate("/Chat")}>Chat</button> : null}
-          {user && localStorage.getItem("userType") === USERTYPE.ADM ? <button className='btnNoBg' onClick={() => navigate("/CadastroCuidador")}>Cadastro de Cuidadores</button> : null}
+          {user && localStorage.getItem("userType") == USERTYPE.ADM ? <><button className='btnNoBg' onClick={() => navigate("/CadastroCuidador")}>Cadastro de Cuidadores</button> <button className='btnNoBg' onClick={() => navigate("/RelatorioCuidador")}>Relatório</button></> : null}
         </nav>
         { user ? <HeaderDropdown /> : 
           <div className='user'>
