@@ -31,7 +31,7 @@ function Card({
             </div>
             <div className="infoText">
               <div className="data">
-                <p className='neighborhood'>{endereco.bairro || "Vila Matilde"}</p>
+                <p className='neighborhood'>{endereco?.bairro || "Vila Matilde"}</p>
                 <h3 className='name'>{nome || "Maria Antonieta"}</h3>
               </div>
               <div className="specialties">

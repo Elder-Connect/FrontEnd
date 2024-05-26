@@ -7,8 +7,7 @@ import api from '../services/api';
 import { toast } from 'react-toastify';
 
 function RelatorioCuidador() {
-
-    const [cardsData, setCardsData] = useState();
+    const [cardsData, setCardsData] = useState([]);
 
     useEffect(() => {
         api.get('/usuarios').then((response) => {
@@ -21,19 +20,39 @@ function RelatorioCuidador() {
     }, []);
 
 
+    const handleExport = () => {
+        api.get('/usuarios/colaboradores/csv', {
+            responseType: 'blob',
+        })
+            .then((response) => {
+                const url = URL.createObjectURL(response.data);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'cuidadores.csv';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            })
+            .catch((err) => {
+                console.error(err);
+                toast.error("Erro ao exportar os dados, tente novamente");
+            });
+    };
+
+
     return (
         <>
             <Header />
             <div className='export'>
-                <button className='exportButton'>
+                <button className='exportButton' onClick={handleExport}>
                     Exportar
                     <img src={IconExportar} alt="icone de exportar arquivo" />
                 </button>
             </div>
 
             <div style={{ display: 'flex', margin: '0 auto', width: '95%', flexDirection: 'row', gap: '1em', flexWrap: 'wrap', alignContent: 'center', justifyContent: 'center' }}>
-                {cardsData && cardsData.map((data) => (
-                    <Card
+                {cardsData && cardsData.map((data, index) => (
+                    <Card key={index}
                         id={data.id}
                         nome={data.nome}
                         email={data.email}
