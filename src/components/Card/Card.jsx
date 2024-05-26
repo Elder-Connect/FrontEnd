@@ -35,8 +35,8 @@ function Card({
                 <h3 className='name'>{nome || "Maria Antonieta"}</h3>
               </div>
               <div className="specialties">
-                {especialidades && especialidades.map((especialidade, index) => (
-                  <Specialty key={index} text={especialidade} />
+                {Array.isArray(especialidades) && especialidades.map((especialidade, index) => (
+                  <Specialty key={index} text={especialidade.nome} />
                 ))}
               </div>
             </div>

@@ -28,7 +28,7 @@ function RelatorioCuidador() {
                 const url = URL.createObjectURL(response.data);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'cuidadores.csv';
+                a.download = 'Relatório de Cuidadores - Elderly.csv';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
