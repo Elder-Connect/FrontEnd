@@ -6,6 +6,7 @@ import Cuidadores from './pages/Cuidadores';
 import Perfil from './pages/Perfil';
 import CadastroCuidador from './pages/CadastroCuidador';
 import Authentication from './services/Authentication';
+import Chat from './pages/Chat';
 import { USERTYPE } from './services/enums';
 
 function Router() {
@@ -16,6 +17,7 @@ function Router() {
         <Route path="/Cuidadores" element={<Cuidadores />} />
         <Route path='/Perfil' element={<Authentication><Perfil/></Authentication>} />
         <Route path='/CadastroCuidador' element={<Authentication userType={USERTYPE.ADM}><CadastroCuidador/></Authentication>}/>
+        <Route path='/Chat' element={<Authentication><Chat/></Authentication>}/>
 				<Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

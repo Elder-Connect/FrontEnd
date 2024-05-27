@@ -72,6 +72,7 @@ function Perfil() {
                         cidade: data?.endereco?.cidade || '',
                         uf: data?.endereco?.uf || ''
                     },
+                    biografia: data?.biografia || '',
                     especialidades: data?.especialidades || []
                 }));
                 setLoading(false);
