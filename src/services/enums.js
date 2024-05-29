@@ -1,7 +1,7 @@
 const USERTYPE = {
     CLIENTE: 3,
     CUIDADOR: 2,
-    ADM: 'ADM'
+    ADM: 1
 };
 
 const GENDER = {
