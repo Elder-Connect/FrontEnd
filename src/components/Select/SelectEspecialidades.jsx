@@ -5,7 +5,7 @@ import api from '../../services/api';
 
 const SelectEspecialidades = ({ value, setFormData }) => {
     const [options, setOptions] = useState([]);
-    const [selectedOptions, setSelectedOptions] = useState(value || []);
+    const [selectedOptions, setSelectedOptions] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef(null);
@@ -15,7 +15,13 @@ const SelectEspecialidades = ({ value, setFormData }) => {
         const fetchEspecialidades = async () => {
             try {
                 const response = await api.get('/especialidades');
-                setOptions(response.data.map((item) => item.nome));
+                const fetchedOptions = response.data.map((item) => [item.id, item.nome]);
+                const initialSelectedOptions = value.map((item) => [item.id, item.nome]);
+                setSelectedOptions(initialSelectedOptions);
+                const filteredOptions = fetchedOptions.filter(option => 
+                    !initialSelectedOptions.some(selected => selected[0] === option[0])
+                );
+                setOptions(filteredOptions);
             } catch (error) {
                 toast.error('Falha ao buscar especialidades');
                 console.error('Failed to fetch:', error);
@@ -36,15 +42,16 @@ const SelectEspecialidades = ({ value, setFormData }) => {
     }, []);
 
     useEffect(() => {
-        setFormData((prevState) => ({ ...prevState, especialidades: selectedOptions }));
+        setFormData((prevState) => ({ ...prevState, especialidades: selectedOptions.map(option => option[0]) }));
     }, [selectedOptions, setFormData]);
 
     const handleRemoveOption = (option) => {
         setOptions((prevState) => [...prevState, option]);
-        setSelectedOptions((prevState) => prevState.filter((opt) => opt !== option));
+        setSelectedOptions((prevState) => prevState.filter((opt) => opt[0] !== option[0]));
     };
     
     const handleInputChange = (event) => {
+        console.log(selectedOptions);
         setSearchText(event.target.value);
     };
     
@@ -53,6 +60,8 @@ const SelectEspecialidades = ({ value, setFormData }) => {
     };
     
     const handleSelectOption = (option) => {
+        console.log(option);
+        console.log(options);
         setSearchText(''); 
         if (selectedOptions.length >= 5) {
             toast.error('Máximo de 5 especialidades selecionadas');
@@ -60,12 +69,12 @@ const SelectEspecialidades = ({ value, setFormData }) => {
             return;
         }
         setSelectedOptions((prevState) => [...prevState, option]);
-        setOptions((prevState) => prevState.filter((opt) => opt !== option));
+        setOptions((prevState) => prevState.filter((opt) => opt[0] !== option[0]));
         setIsFocused(false);
     };
 
     const filteredOptions = options.filter(option =>
-        option.toLowerCase().includes(searchText.toLowerCase())
+        option[1] ? option[1].toLowerCase().includes(searchText.toLowerCase()) : false
     );
 
     return (
@@ -83,11 +92,11 @@ const SelectEspecialidades = ({ value, setFormData }) => {
                     <div className="options-dropdown">
                         {filteredOptions.map((option) => (
                             <div 
-                                key={option} 
+                                key={option[0]} 
                                 className="option-item" 
                                 onClick={() => handleSelectOption(option)}
                             >
-                                {option}
+                                {option[1]}
                             </div>
                         ))}
                     </div>
@@ -95,8 +104,8 @@ const SelectEspecialidades = ({ value, setFormData }) => {
             </div>
             <div className='specialtyContainer'>
                 {selectedOptions.map((option) => (
-                    <div className='specialtyBox' key={option}>
-                        <span>{option}</span>
+                    <div className='specialtyBox' key={option[0]}>
+                        <span>{option[1]}</span>
                         <button onClick={() => handleRemoveOption(option)}>X</button>
                     </div>
                 ))}

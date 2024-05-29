@@ -42,7 +42,7 @@ function CadastroCuidador() {
         
         //Cadastrar Usuário
         try {
-            const response = await api.post(`/colaborador`, formData);
+            const response = await api.post(`/usuarios/colaborador`, formData);
             if (response.status === 201) {
                 navigate('/Cuidadores');
                 toast.success('Usuário cadastrado com sucesso');

@@ -10,11 +10,13 @@ import { toast } from 'react-toastify';
 import { handleCepChange, handleDocumentChange, handleInputChange, handleDataNascimento, validadeForm } from '../services/inputHandler';
 import Select from '../components/Select/Select';
 import SelectEspecialidades from '../components/Select/SelectEspecialidades';
+import { logOff, setLocalStorage } from '../services/auth';
 
 function Perfil() {
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const location = useLocation();
+    const [loading, setLoading] = useState(true);
     const [ formData, setFormData ] = useState({
         nome: "",
         email: "",
@@ -22,6 +24,7 @@ function Perfil() {
         dataNascimento: "",
         tipoUsuario: USERTYPE.CLIENTE,
         genero: GENDER.MASCULINO,
+        fotoPerfil: user?.picture || '',
         endereco: {
             cep: "",
             logradouro: "",
@@ -47,6 +50,7 @@ function Perfil() {
                 nome: userInfo.name,
                 email: userInfo.email,
             }));
+            setLoading(false);
         }else{
         //Usuário já existente
             api.get(`/usuarios/${localStorage.getItem('userId')}`).then((response) => {
@@ -70,6 +74,10 @@ function Perfil() {
                     },
                     especialidades: data?.especialidades || []
                 }));
+                setLoading(false);
+            }).catch((error) => {
+                console.error('Failed to fetch user:', error);
+                setLoading(false);
             });
         }
     }, [location]);
@@ -110,8 +118,7 @@ function Perfil() {
             const response = await api.post(url, formData);
             if (response.status === 201) {
                 navigate('/Cuidadores');
-                localStorage.setItem('accessToken', tokenResponse.access_token);
-                localStorage.setItem('userId', response.data.id);
+                setLocalStorage(tokenResponse, response.data);
                 toast.success('Usuário cadastrado com sucesso');
             }
         } catch (error) {
@@ -126,8 +133,7 @@ function Perfil() {
             if (response.status === 404 || response.status === 204) {
                 toast.success('Usuário excluído com sucesso');
                 setUser(null);
-                localStorage.removeItem("accessToken");
-                localStorage.removeItem("userId");
+                logOff();
                 navigate('/');
             }
         } catch (error) {
@@ -156,18 +162,14 @@ function Perfil() {
             document.getElementById('informacoesPessoaisBtn').style.boxShadow = 'inset 0px -2px 0px 0px var(--primary)';
             document.getElementById('informacoesPessoaisBtn').style.color = 'var(--primary)';
             document.getElementById('endereco').style.display = 'none';
-            if(formData.tipoUsuario === USERTYPE.CUIDADOR) {
-                document.getElementById('especialidades').style.display = 'none';
-            }
+            document.getElementById('especialidades').style.display = 'none';
         } else if (index === 1) {
             removeFocus();
             document.getElementById('informacoesPessoais').style.display = 'none';
             document.getElementById('endereco').style.display = 'flex';
             document.getElementById('enderecoBtn').style.boxShadow = 'inset 0px -2px 0px 0px var(--primary)';
             document.getElementById('enderecoBtn').style.color = 'var(--primary)';
-            if(formData.tipoUsuario === USERTYPE.CUIDADOR){
-                document.getElementById('especialidades').style.display = 'none';
-            }
+            document.getElementById('especialidades').style.display = 'none';
         } else {
             removeFocus();
             document.getElementById('informacoesPessoais').style.display = 'none';
@@ -209,7 +211,7 @@ function Perfil() {
                             </div>
 
                             <div className='formColuna'>
-                                <Input name="email" value={formData.email} onChange={(e) => handleInputChange(e, setFormData)} label="Email" placeholder="John.doe@example.com" mandatory />
+                                <Input name="email" value={formData.email} onChange={(e) => handleInputChange(e, setFormData)} label="Email" placeholder="John.doe@example.com" disabled mandatory />
                                 <Input name="dataNascimento" value={formData.dataNascimento} onChange={(e) => handleDataNascimento(e, setFormData)} label="Data de Nascimento" placeholder="1990-12-31" mandatory />
                             </div>
                         </div>
@@ -231,20 +233,22 @@ function Perfil() {
                         </div>
 
                         {/* Especialidades */}
-                        {formData.tipoUsuario === USERTYPE.CUIDADOR && 
-                            <div className='inputWrapper' id="especialidades">
-                                <div className='formColuna'>
+                        <div className='inputWrapper' id="especialidades">
+                            <div className='formColuna'>
+                                {loading ? (
+                                    <p>Loading...</p> //TODO Loading component
+                                ) : (
                                     <SelectEspecialidades value={formData.especialidades} setFormData={setFormData} />
-                                </div>
+                                )}
+                            </div>
 
-                                <div className='formColuna'>
-                                    <div>
-                                        <p>Biografia</p>
-                                        <textarea id="input-text" name="biografia" value={formData.biografia} onChange={(e) => handleInputChange(e, setFormData)}></textarea>
-                                    </div>
+                            <div className='formColuna'>
+                                <div>
+                                    <p>Biografia</p>
+                                    <textarea id="input-text" name="biografia" value={formData.biografia} onChange={(e) => handleInputChange(e, setFormData)}></textarea>
                                 </div>
                             </div>
-                        }
+                        </div>
                     </div>
                     <div style={{display: 'flex', gap: '1em'}}>
                         <button className='btn' type='submit'>Salvar</button>
