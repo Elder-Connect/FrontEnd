@@ -7,8 +7,8 @@
   --input-text: hsl(231, 13%, 50%);
   --subtitle: hsl(232, 3%, 75%);
   --white: hsl(0, 0%, 90%);  
-  --error: #e74c3c;
-  --success: #07bc0c;
+  --error: hsl(6, 78%, 57%);
+  --success: hsl(122, 93%, 38%);
 }
 
 body {
