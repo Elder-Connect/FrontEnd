@@ -77,6 +77,12 @@
   height: 85vh;
 }
 
+.date-separator {
+  display: flex;
+  justify-content: center;
+  color: var(--input-text);
+}
+
 .chat-input {
   display: flex;
   padding: 10px;
@@ -87,6 +93,25 @@
   padding: 20px;
   border: 1px solid var(--white);
   border-radius: 4px;
+}
+
+.chat-input button {
+  background-color: var(--primary);
+  border: none;
+  color: white;
+  padding: 20px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05em;
+}
+
+.chat-input button:focus {
+  outline: none;
+  background-color: var(--primary-hover);
 }
 
 .chat-input button:hover {
@@ -110,17 +135,17 @@
   max-width: 75%;
 }
 
-.chat-message-time{
+.chat-message-time {
   font-size: 0.6em;
   margin-top: 3px;
 }
 
-.chat-message-time.sent{
+.chat-message-time.sent {
   color: var(--primary-medium);
   text-align: right;
 }
 
-.chat-message-time.received{
+.chat-message-time.received {
   color: var(--sub-subtitle);
   text-align: left;
 }
@@ -153,7 +178,7 @@
   background: var(--white);
 }
 
-.proposal{
+.proposal {
   display: flex;
   flex-direction: column;
   width: 65%;
@@ -164,7 +189,7 @@
   gap: 15px;
 }
 
-.proposal.sent{
+.proposal.sent {
   background-color: var(--primary);
   color: white;
 }
@@ -185,7 +210,7 @@
   color: var(--sub-subtitle);
 }
 
-.proposal-datetime.sent{
+.proposal-datetime.sent {
   color: var(--primary-medium);
 }
 
@@ -198,7 +223,7 @@
   color: var(--black);
 }
 
-.proposal-tag.sent{
+.proposal-tag.sent {
   color: white;
 }
 
@@ -206,7 +231,7 @@
   padding: 10px 0px;
 }
 
-.proposal-tags{
+.proposal-tags {
   display: flex;
   gap: 1em;
 }
@@ -220,7 +245,7 @@
   cursor: pointer;
 }
 
-.proposal-accept-button.sent{
+.proposal-accept-button.sent {
   display: none;
 }
 

@@ -7,7 +7,7 @@ import { USERTYPE, GENDER, ufOptions, genderOptions } from '../services/enums';
 import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { toast } from 'react-toastify';
-import { handleCepChange, handleDocumentChange, handleInputChange, handleDataNascimento, validadeForm } from '../services/inputHandler';
+import { handleCepChange, handleDocumentChange, handleInputChange, handleDataNascimento, validadeForm } from '../services/utils';
 import Select from '../components/Select/Select';
 import SelectEspecialidades from '../components/Select/SelectEspecialidades';
 import { logOff, setLocalStorage } from '../services/auth';
