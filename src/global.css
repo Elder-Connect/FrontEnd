@@ -9,8 +9,8 @@
   --sub-subtitle: hsl(0, 0%, 70%);
   --white: hsl(0, 0%, 90%);
   --white-hover: hsl(0, 0%, 85%);
-  --error: #e74c3c;
-  --success: #07bc0c;
+  --error: hsl(6, 78%, 57%);
+  --success: hsl(122, 93%, 38%);
 }
 
 body {
