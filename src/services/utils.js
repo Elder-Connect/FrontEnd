@@ -63,17 +63,13 @@ export const handleDataNascimento = (event, setFormData) => {
     const { value } = event.target;
     let formattedDate = value.replace(/[^\d]/g, '');
 
-    if (formattedDate.length > 10) {
+    if (formattedDate.length > 8) {
         return;
     }
 
     if (formattedDate.length <= 8) {
-        formattedDate = formattedDate.replace(/^(\d{4})(\d)/, '$1-$2');
-        formattedDate = formattedDate.replace(/^(\d{4})-(\d{2})(\d)/, '$1-$2-$3');
-    } else if (formattedDate.length > 8) {
-        formattedDate = formattedDate.slice(0, 8);
-        formattedDate = formattedDate.replace(/^(\d{4})(\d)/, '$1-$2');
-        formattedDate = formattedDate.replace(/^(\d{4})-(\d{2})(\d)/, '$1-$2-$3');
+        formattedDate = formattedDate.replace(/^(\d{2})(\d)/, '$1/$2');
+        formattedDate = formattedDate.replace(/^(\d{2})\/(\d{2})(\d)/, '$1/$2/$3');
     }
 
     setFormData((prevState) => ({
@@ -82,6 +78,44 @@ export const handleDataNascimento = (event, setFormData) => {
     }));
 };
 
+export const convertDateToBackendFormat = (date) => {
+    const [day, month, year] = date.split('/');
+    return `${year}-${month}-${day}`;
+};
+
+export const convertDateToFrontendFormat = (date) => {
+    const [year, month, day] = date.split('-');
+    return `${day}/${month}/${year}`;
+};
+
+export const handlePriceChange = (e, setPrice) => {
+    const rawValue = e.target.value.replace(/[^\d]/g, '');
+
+    if (rawValue === '') {
+        setPrice('');
+    } else if(parseInt(rawValue, 10) >= 10_000_00){
+        setPrice('R$10.000,00');
+        toast.info('Valor máximo permitido é R$10.000,00');
+    }else {
+        const valueInCents = parseInt(rawValue, 10);
+        const formattedPrice = `R$${(valueInCents / 100).toLocaleString('pt-BR', {
+          minimumFractionDigits: 2,
+        })}`;
+        setPrice(formattedPrice);
+    }
+};
+
+export const formatPriceFrontend = (price) => {
+    return `R$${(price).toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+    })}`;
+}
+
+export const formatPriceBackend = (price) => {
+    const rawValue = price.replace(/[^\d]/g, '');
+    const valueInDouble = parseInt(rawValue, 10) / 100;
+    return valueInDouble;
+}
 
 export const handleInputChange = (event, setFormData) => {
     let { name, value } = event.target;
@@ -95,7 +129,16 @@ export const handleInputChange = (event, setFormData) => {
                 [endereco]: value
             }
         }));
-    } else {
+    } else if(name.includes('proposta.')){
+        const proposta = name.split('.')[1];
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            proposta: {
+                ...prevFormData.proposta,
+                [proposta]: value
+            }
+        }));
+    }else {
         setFormData(prevFormData => ({
             ...prevFormData,
             [name]: value
@@ -120,3 +163,44 @@ export const validadeForm = () => {
     }
     return isValid;
 };
+
+export const formatHour = (dateTime) => {
+    let date = new Date(dateTime);
+
+    let hours = String(date.getHours()).padStart(2, '0');
+    let minutes = String(date.getMinutes()).padStart(2, '0');
+    let seconds = String(date.getSeconds()).padStart(2, '0');
+
+    return `${hours}:${minutes}:${seconds}`;
+}
+
+export const formatDate = (date) => {
+    const options = { day: '2-digit', month: 'long', year: 'numeric' };
+    return new Date(date).toLocaleDateString('pt-BR', options);
+}
+
+export const isNewDay = (currentDate, previousDate) => {
+    const current = new Date(currentDate);
+    const previous = new Date(previousDate);
+
+    return current.getFullYear() !== previous.getFullYear() ||
+            current.getMonth() !== previous.getMonth() ||
+            current.getDate() !== previous.getDate();
+}
+
+export const convertDateToFrontend = (dateTime) => {
+    const date = new Date(dateTime);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
+}
+
+export const convertTimeToFrontend = (dateTime) => {
+    const date = new Date(dateTime);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `${hours}:${minutes}`;
+}

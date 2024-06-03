@@ -7,7 +7,7 @@ import { USERTYPE, GENDER, ufOptions, genderOptions } from '../services/enums';
 import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { toast } from 'react-toastify';
-import { handleCepChange, handleDocumentChange, handleInputChange, handleDataNascimento, validadeForm } from '../services/inputHandler';
+import { handleCepChange, handleDocumentChange, handleInputChange, handleDataNascimento, validadeForm, convertDateToFrontendFormat, convertDateToBackendFormat } from '../services/utils';
 import Select from '../components/Select/Select';
 import SelectEspecialidades from '../components/Select/SelectEspecialidades';
 import { logOff, setLocalStorage } from '../services/auth';
@@ -60,7 +60,7 @@ function Perfil() {
                     nome: data?.nome || '',
                     email: data?.email || '',
                     documento: data?.documento || '',
-                    dataNascimento: data?.dataNascimento || '',
+                    dataNascimento: convertDateToFrontendFormat(data?.dataNascimento) || '',
                     tipoUsuario: data?.tipoUsuario || '',
                     genero: data?.genero || '',
                     endereco: {
@@ -72,6 +72,7 @@ function Perfil() {
                         cidade: data?.endereco?.cidade || '',
                         uf: data?.endereco?.uf || ''
                     },
+                    biografia: data?.biografia || '',
                     especialidades: data?.especialidades || []
                 }));
                 setLoading(false);
@@ -94,7 +95,11 @@ function Perfil() {
         //Atualizar usuário
         if(localStorage.getItem('userId')) {
             try {
-                const response = await api.put(`/usuarios/${localStorage.getItem('userId')}`, formData);
+                const formatedData = {
+                    ...formData,
+                    dataNascimento: convertDateToBackendFormat(formData.dataNascimento)
+                };
+                const response = await api.put(`/usuarios/${localStorage.getItem('userId')}`, formatedData);
                 if (response.status === 200) {
                     toast.success('Usuário atualizado com sucesso');
                     navigate('/Cuidadores');
@@ -115,7 +120,11 @@ function Perfil() {
         let url = formData.tipoUsuario === USERTYPE.CLIENTE ? '/usuarios/cliente' : '/usuarios/colaborador';
         
         try {
-            const response = await api.post(url, formData);
+            const formatedData = {
+                ...formData,
+                dataNascimento: convertDateToBackendFormat(formData.dataNascimento)
+            };
+            const response = await api.post(url, formatedData);
             if (response.status === 201) {
                 navigate('/Cuidadores');
                 setLocalStorage(tokenResponse, response.data);
@@ -212,7 +221,7 @@ function Perfil() {
 
                             <div className='formColuna'>
                                 <Input name="email" value={formData.email} onChange={(e) => handleInputChange(e, setFormData)} label="Email" placeholder="John.doe@example.com" disabled mandatory />
-                                <Input name="dataNascimento" value={formData.dataNascimento} onChange={(e) => handleDataNascimento(e, setFormData)} label="Data de Nascimento" placeholder="1990-12-31" mandatory />
+                                <Input name="dataNascimento" value={formData.dataNascimento} onChange={(e) => handleDataNascimento(e, setFormData)} label="Data de Nascimento" placeholder="31/12/1990" mandatory />
                             </div>
                         </div>
 
