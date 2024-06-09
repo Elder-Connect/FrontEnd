@@ -1,8 +1,9 @@
 import React from 'react';
+import './Loading.css';
 
 const Loading = () => (
-  <div style={{ display: 'flex', placeContent: 'center', height: '50vh' }}>
-    <img src="https://thebowlcut.com/cdn/shop/t/41/assets/loading.gif?v=157493769327766696621701744369" alt="loading gif" />
+  <div style={{ display: 'flex', placeContent: 'center', alignItems: 'center', height: '50vh' }}>
+    <div className='c-loader' alt='loading gif'></div>
   </div>
 );
 
