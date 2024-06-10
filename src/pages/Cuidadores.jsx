@@ -5,16 +5,19 @@ import Search from '../components/Search/Search'
 import api from '../services/api'
 import { toast } from 'react-toastify'
 import Loading from '../components/Loading/Loading'
+import GoogleLoginModal from '../components/GoogleLoginModal/GoogleLoginModal'
 
 function Cuidadores() {
   const [loading, setLoading] = useState(false);
   const [cuidadores, setCuidadores] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const handleSearch = async (startDate, endDate, especialidades) => {
     setLoading(true);
     if(!localStorage.getItem('accessToken')){
       setLoading(false);
-      return toast.error('Você precisa estar logado para realizar essa ação');
+      setShowModal(true);
+      return;
     }
     const especialidadesArray = await getEspecialidades(especialidades.especialidades);
     try {
@@ -64,6 +67,10 @@ function Cuidadores() {
         <Header />
         <Search handler={handleSearch} />
         <Loading show={loading} />
+        <GoogleLoginModal
+          isOpen={showModal}
+          setIsOpen={setShowModal}
+        />
         {!cuidadores &&
           <div className="chat-empty" style={{height: '75vh'}}>
             <div className="chat-empty-icon">🔍</div>
