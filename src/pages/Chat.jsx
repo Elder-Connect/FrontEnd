@@ -47,6 +47,7 @@ function Chat() {
       setLoading(true);
       try{
         let c = await api.get(`/mensagens/conversas/${userId}`);
+        setLoading(false);
         
         //Cuidador Vindo do Chat
         if(cuidadorInfo) {
@@ -55,7 +56,6 @@ function Chat() {
           }else{
             setContactId(cuidadorInfo.id);
             c.data.push(cuidadorInfo);
-            setLoading(false);
           }
         }
 
@@ -70,25 +70,25 @@ function Chat() {
     loadContacts();
   }, [userId]);
 
-  // useEffect(() => {
-  //   let intervalId;
-  //   if (contactId !== undefined) {
-  //     if(messages.length === 0) setLoading(true);
-  //     intervalId = setInterval(async () => {
-  //       try {
-  //         const response = await api.get(`/mensagens/${userId}/${contactId}`);
-  //         setLoading(false);
-  //         setMessages(response.data);
-  //       } catch (err) {
-  //         setLoading(false);
-  //         toast.error('Erro ao carregar as mensagens');
-  //         console.log(err);
-  //       }
-  //     }, 10_000);
-  //   }
+  useEffect(() => {
+    let intervalId;
+    if (contactId !== undefined) {
+      if(messages.length === 0) setLoading(true);
+      intervalId = setInterval(async () => {
+        try {
+          const response = await api.get(`/mensagens/${userId}/${contactId}`);
+          setLoading(false);
+          setMessages(response.data);
+        } catch (err) {
+          setLoading(false);
+          toast.error('Erro ao carregar as mensagens');
+          console.log(err);
+        }
+      }, 10_000);
+    }
 
-  //   return () => clearInterval(intervalId);
-  // }, [userId, contactId]);
+    return () => clearInterval(intervalId);
+  }, [userId, contactId]);
 
   const handleContactClick = async (id) => {
     setLoading(true);

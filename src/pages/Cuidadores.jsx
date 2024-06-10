@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 
 function Cuidadores() {
 
-  const [cuidadores, setCuidadores] = useState([]);
+  const [cuidadores, setCuidadores] = useState(null);
 
   const handleSearch = async (startDate, endDate, especialidades) => {
     if(!localStorage.getItem('accessToken')){
@@ -27,6 +27,10 @@ function Cuidadores() {
       });
       setCuidadores(response.data);
     } catch (error) {
+      if(error.response.status === 404){
+        setCuidadores([]);
+        return;
+      }
       toast.error('Erro ao buscar cuidadores');
       console.error('Failed to fetch:', error);
     }
@@ -54,24 +58,35 @@ function Cuidadores() {
     <>
         <Header />
         <Search handler={handleSearch} />
-        <div style={{ display: 'flex', margin: '0 auto', width: '95%', flexDirection: 'row', gap: '1em', flexWrap: 'wrap', alignContent: 'center', justifyContent: 'center'}}>
-          {/*
-            TODO
-            Pass the userId of the user in card on the URL when the actionButton is clicked 
-           */}
-          {cuidadores.map((cuidador, index) => (
-            <Card 
-              key={index}
-              id={cuidador.id}
-              nome={cuidador.nome}
-              biografia={cuidador.biografia}
-              fotoPerfil={cuidador.fotoPerfil}
-              endereco={cuidador.endereco}
-              especialidades={cuidador.especialidades}
-              btn
-            />
-          ))}
-        </div>
+
+        {!cuidadores &&
+          <div className="chat-empty" style={{height: '75vh'}}>
+            <div className="chat-empty-icon">🔍</div>
+            <div className="chat-empty-text">Busque por um Cuidador.</div>
+          </div>
+        }
+        {cuidadores && cuidadores.length === 0 &&
+          <div className="chat-empty" style={{height: '75vh'}}>
+            <div className="chat-empty-icon">😔</div>
+            <div className="chat-empty-text">Nenhum Cuidador encontrado.</div>
+          </div>
+        }
+        {cuidadores && !cuidadores.length === 0 &&
+          <div style={{ display: 'flex', margin: '0 auto', width: '95%', flexDirection: 'row', gap: '1em', flexWrap: 'wrap', alignContent: 'center', justifyContent: 'center'}}>
+            {cuidadores.map((cuidador, index) => (
+                <Card 
+                  key={index}
+                  id={cuidador.id}
+                  nome={cuidador.nome}
+                  biografia={cuidador.biografia}
+                  fotoPerfil={cuidador.fotoPerfil}
+                  endereco={cuidador.endereco}
+                  especialidades={cuidador.especialidades}
+                  btn
+                />
+            ))}
+          </div>
+        }
     </>
   )
 }
