@@ -4,13 +4,16 @@ import Card from '../components/Card/Card'
 import Search from '../components/Search/Search'
 import api from '../services/api'
 import { toast } from 'react-toastify'
+import Loading from '../components/Loading/Loading'
 
 function Cuidadores() {
-
+  const [loading, setLoading] = useState(false);
   const [cuidadores, setCuidadores] = useState(null);
 
   const handleSearch = async (startDate, endDate, especialidades) => {
+    setLoading(true);
     if(!localStorage.getItem('accessToken')){
+      setLoading(false);
       return toast.error('Você precisa estar logado para realizar essa ação');
     }
     const especialidadesArray = await getEspecialidades(especialidades.especialidades);
@@ -26,7 +29,9 @@ function Cuidadores() {
         }
       });
       setCuidadores(response.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       if(error.response.status === 404){
         setCuidadores([]);
         return;
@@ -58,7 +63,7 @@ function Cuidadores() {
     <>
         <Header />
         <Search handler={handleSearch} />
-
+        <Loading show={loading} />
         {!cuidadores &&
           <div className="chat-empty" style={{height: '75vh'}}>
             <div className="chat-empty-icon">🔍</div>
