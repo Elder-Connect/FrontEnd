@@ -5,15 +5,20 @@ import IconExportar from '../assets/img/icon-download.svg'
 import './RelatorioCuidador.css'
 import api from '../services/api';
 import { toast } from 'react-toastify';
+import Loading from '../components/Loading/Loading';
 
 function RelatorioCuidador() {
     const [cardsData, setCardsData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true);
         api.get('/usuarios').then((response) => {
+            setLoading(false);
             const { data } = response;
             setCardsData(data);
         }).catch(() => {
+            setLoading(false);
             console.log('Erro ao buscar os dados do BackEnd: ')
             toast.error("Erro ao recuperar os valores da API, tente novamente");
         });
@@ -21,10 +26,12 @@ function RelatorioCuidador() {
 
 
     const handleExport = () => {
+        setLoading(true);
         api.get('/usuarios/colaboradores/csv', {
             responseType: 'blob',
         })
             .then((response) => {
+                setLoading(false);
                 const url = URL.createObjectURL(response.data);
                 const a = document.createElement('a');
                 a.href = url;
@@ -34,6 +41,7 @@ function RelatorioCuidador() {
                 document.body.removeChild(a);
             })
             .catch((err) => {
+                setLoading(false);
                 console.error(err);
                 toast.error("Erro ao exportar os dados, tente novamente");
             });
@@ -43,6 +51,7 @@ function RelatorioCuidador() {
     return (
         <>
             <Header />
+            <Loading show={loading} />
             <div className='export'>
                 <button className='exportButton' onClick={handleExport}>
                     Exportar

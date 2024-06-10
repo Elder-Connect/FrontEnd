@@ -51,7 +51,6 @@ const SelectEspecialidades = ({ value, setFormData }) => {
     };
     
     const handleInputChange = (event) => {
-        console.log(selectedOptions);
         setSearchText(event.target.value);
     };
     
@@ -60,8 +59,6 @@ const SelectEspecialidades = ({ value, setFormData }) => {
     };
     
     const handleSelectOption = (option) => {
-        console.log(option);
-        console.log(options);
         setSearchText(''); 
         if (selectedOptions.length >= 5) {
             toast.error('Máximo de 5 especialidades selecionadas');

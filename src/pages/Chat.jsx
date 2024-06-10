@@ -11,9 +11,11 @@ import api from '../services/api';
 import { toast } from 'react-toastify';
 import { convertDateToFrontend, convertTimeToFrontend, formatDate, formatHour, formatPriceBackend, formatPriceFrontend, handleInputChange, handlePriceChange, isNewDay } from '../services/utils';
 import { USERTYPE } from '../services/enums';
+import Loading from '../components/Loading/Loading';
 
 function Chat() {
   const userId = Number(localStorage.getItem('userId'));
+  const [loading, setLoading] = useState(false);
   const [contactId, setContactId] = useState(undefined);
   const [contacts, setContacts] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -42,10 +44,13 @@ function Chat() {
     */
 
     async function loadContacts() {
+      setLoading(true);
       try{
         let c = await api.get(`/mensagens/conversas/${userId}`);
+        setLoading(false);
         c.data.length === 0 ? toast.info('Você não possui conversas') : setContacts(c.data);
       }catch(err){
+        setLoading(false);
         toast.error('Erro ao carregar as conversas');
         console.log(err);
       }
@@ -57,11 +62,14 @@ function Chat() {
   useEffect(() => {
     let intervalId;
     if (contactId !== undefined) {
+      if(messages.length === 0) setLoading(true);
       intervalId = setInterval(async () => {
         try {
           const response = await api.get(`/mensagens/${userId}/${contactId}`);
+          setLoading(false);
           setMessages(response.data);
         } catch (err) {
+          setLoading(false);
           toast.error('Erro ao carregar as mensagens');
           console.log(err);
         }
@@ -72,13 +80,16 @@ function Chat() {
   }, [userId, contactId]);
 
   const handleContactClick = async (contactId) => {
+    setLoading(true);
     try {
       const response = await api.get(`/mensagens/${userId}/${contactId}`);
+      setLoading(false);
       setMessages(response.data);
       setContactId(contactId);
       setProposal({ ...proposal, destinatarioId: contactId });
       // TODO Scroll to the bottom of the chat
     } catch (err) {
+      setLoading(false);
       setContactId(undefined);
       toast.error('Erro ao carregar as mensagens');
       console.log(err);
@@ -147,7 +158,9 @@ function Chat() {
 
   const handleAcceptProposal = async (id) => {
     try {
+      setLoading(true);
       const response = await api.patch(`/propostas/aceitar/${id}`, null, {headers: {'accessToken': localStorage.getItem('accessToken')}});
+      setLoading(false);
       if(response.status === 200) {
         toast.success('Proposta aceita com sucesso!');
         const newMessages = messages.map(message => {
@@ -159,6 +172,7 @@ function Chat() {
         setMessages(newMessages);
       }
     } catch (err) {
+      setLoading(false);
       toast.error('Erro ao aceitar a proposta');
       console.log(err);
     }
@@ -179,6 +193,7 @@ function Chat() {
   return (
     <>
       <Header />
+      <Loading show={loading} />
       <div className="chat-container">
         <div className="contact-list">
           {contacts.map(contact => (

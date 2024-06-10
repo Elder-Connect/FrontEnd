@@ -11,6 +11,7 @@ import { handleCepChange, handleDocumentChange, handleInputChange, handleDataNas
 import Select from '../components/Select/Select';
 import SelectEspecialidades from '../components/Select/SelectEspecialidades';
 import { logOff, setLocalStorage } from '../services/auth';
+import Loading from '../components/Loading/Loading';
 
 function Perfil() {
     const { user, setUser } = useContext(UserContext);
@@ -85,9 +86,11 @@ function Perfil() {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true);
 
         //Validar Formulário
         if(!validadeForm()){
+            setLoading(false);
             toast.error('Preencha todos os campos obrigatórios');
             return;
         }
@@ -100,11 +103,13 @@ function Perfil() {
                     dataNascimento: convertDateToBackendFormat(formData.dataNascimento)
                 };
                 const response = await api.put(`/usuarios/${localStorage.getItem('userId')}`, formatedData);
+                setLoading(false);
                 if (response.status === 200) {
                     toast.success('Usuário atualizado com sucesso');
                     navigate('/Cuidadores');
                 }
             } catch (error) {
+                setLoading(false);
                 toast.error('Falha ao atualizar usuário');
                 console.error('Failed to update user:', error);
             }
@@ -125,20 +130,24 @@ function Perfil() {
                 dataNascimento: convertDateToBackendFormat(formData.dataNascimento)
             };
             const response = await api.post(url, formatedData);
+            setLoading(false);
             if (response.status === 201) {
                 navigate('/Cuidadores');
                 setLocalStorage(tokenResponse, response.data);
                 toast.success('Usuário cadastrado com sucesso');
             }
         } catch (error) {
+            setLoading(false);
             toast.error('Falha ao cadastrar usuário');
             console.error('Failed to sign up:', error);
         }
     };
 
     const deleteUser = async () => {
+        setLoading(true);
         try {
             const response = await api.delete(`/usuarios/${localStorage.getItem('userId')}`);
+            setLoading(false);
             if (response.status === 404 || response.status === 204) {
                 toast.success('Usuário excluído com sucesso');
                 setUser(null);
@@ -192,7 +201,7 @@ function Perfil() {
     return (
         <>
             <Header />
-
+            <Loading show={loading} />
             <div className='container'>
                 <div className="imageContainer">
                     <img src={user.picture} alt="Botão para acessar funções de usuário" />

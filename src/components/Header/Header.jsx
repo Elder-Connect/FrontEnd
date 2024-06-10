@@ -1,4 +1,4 @@
-import { React, useContext } from 'react'
+import { React, useContext, useState } from 'react'
 import { UserContext } from '../../App'
 import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate } from "react-router-dom"
@@ -10,9 +10,11 @@ import { auth, logOff, setLocalStorage } from "../../services/auth";
 import api from '../../services/api';
 import { toast } from 'react-toastify';
 import { USERTYPE } from '../../services/enums';
+import Loading from '../Loading/Loading';
 
 function Header() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   
   //Login  
   const { user, setUser } = useContext(UserContext);
@@ -22,15 +24,18 @@ function Header() {
     onError: errorResponse => console.log(errorResponse),
   });
   async function handleLogin(tokenResponse){
+    setLoading(true);
     const userInfo = await auth(tokenResponse.access_token);
     setUser(userInfo);
     
     try {
       const response = await api.get(`/usuarios/email/${userInfo.email}`);
+      setLoading(false);
       if (response.status === 200) {
         setLocalStorage(tokenResponse, response.data);
       }
     } catch (error) {
+      setLoading(false);
       if (error.response && error.response.status === 404) {
         navigate('/Perfil', { state: { tokenResponse: tokenResponse, userInfo: userInfo } });
       } else {
@@ -44,6 +49,7 @@ function Header() {
   
   return (
     <header>
+        <Loading show={loading} />
         <img className="logo" src={Logo} alt="Elder.ly Logo"/>
         <nav>
           <button className='btnNoBg' onClick={() => navigate("/")}>Home</button>

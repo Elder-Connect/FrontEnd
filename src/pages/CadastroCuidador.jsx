@@ -9,9 +9,11 @@ import { useNavigate } from 'react-router-dom';
 import { handleCepChange, handleDocumentChange, handleInputChange, handleDataNascimento, validadeForm } from '../services/utils';
 import Select from '../components/Select/Select';
 import SelectEspecialidades from '../components/Select/SelectEspecialidades';
+import Loading from '../components/Loading/Loading';
 
 function CadastroCuidador() {
     const navigate = useNavigate();
+    const [loading, setLoading] = React.useState(false);
     const [formData, setFormData] = React.useState({
         nome: "",
         email: "",
@@ -33,9 +35,11 @@ function CadastroCuidador() {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true);
         
         //Validar Formulário
         if(!validadeForm()){
+            setLoading(false);
             toast.error('Preencha todos os campos obrigatórios');
             return;
         }
@@ -43,11 +47,13 @@ function CadastroCuidador() {
         //Cadastrar Usuário
         try {
             const response = await api.post(`/usuarios/colaborador`, formData);
+            setLoading(false);
             if (response.status === 201) {
                 navigate('/Cuidadores');
                 toast.success('Usuário cadastrado com sucesso');
             }
         } catch (error) {
+            setLoading(false);
             toast.error('Falha ao cadastrar usuário');
             console.error('Failed to sign up:', error);
         }
@@ -56,7 +62,7 @@ function CadastroCuidador() {
     return (
         <>
             <Header />
-
+            <Loading show={loading} />
             <div className='container'>
                 <h1>Cadastro de Cuidador</h1>
 
