@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Search.css';
 import DatePicker, { registerLocale } from "react-datepicker";
 import ptBr from "date-fns/locale/pt-BR";
+import SelectEspecialidades from '../Select/SelectEspecialidades';
+import { ReactComponent as SearchIcon } from '@material-symbols/svg-600/rounded/search-fill.svg';
+import { handlePriceChange } from '../../services/utils';
+import Loading from '../Loading/Loading';
 registerLocale("pt-BR", ptBr);
 
-function Search() {
+function Search(props) {
   const [filter, setFilter] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [especialidades, setEspecialidades] = useState([]);
 
   const display = (id) => {
     setFilter(filter === id ? '' : id);
+  };
+
+  const handleSearch = async () => {
+    props.handler(startDate, endDate, especialidades);
+    document.getElementById('searchIcon').style.color = 'white';
+    setFilter('search');
+    setTimeout(() => {
+      document.getElementById('searchIcon').style.color = 'black';
+      setFilter('');
+    }, 300);
   };
 
   // TODO: Add Search Button
@@ -32,15 +47,12 @@ function Search() {
             </div>
           </div>
           <hr className="divisionLine" />
-          <div className={`search-item border-right ${filter === 'priceRange' ? 'active' : ''}`} onClick={() => display('priceRange')}> {/*TODO: Add Tab navigation and Click outside to close*/}
-          <div>
-            <label style={filter === 'priceRange' ? { color: 'var(--white)' } : {}} htmlFor="preco">Preço</label>
-            <p>Buscar por Preço</p>
-          </div>
+          <div onClick={() => handleSearch()} className={`search-item border-right ${filter === 'search' ? 'active' : ''}`} > {/*TODO: Add Tab navigation and Click outside to close*/}
+            <SearchIcon id='searchIcon'/>
           </div>
         </div>
       </div>
-      <div id="filters" style={{ display: filter ? 'flex' : 'none' }}>
+      <div id="filters" style={{ display: filter && filter !== 'search' ? 'flex' : 'none' }}>
         <div id="dateSearch" style={{ display: filter === 'dateSearch' ? 'flex' : 'none' }}>
           <div className="inicio">
             <label>Início</label>
@@ -70,15 +82,8 @@ function Search() {
             />
           </div>
         </div>
-        <div id="specialtySelect" style={{ display: filter === 'specialtySelect' ? 'block' : 'none' }}>
-          <select name="especialidade">
-            <option value="cuidados">Cuidados</option>
-            <option value="atividades">Atividades</option>
-            <option value="acompanhamento">Acompanhamento</option>
-          </select>
-        </div>
-        <div id="priceRange" style={{ display: filter === 'priceRange' ? 'block' : 'none' }}>
-          <input type="number" name='preco' placeholder="Buscar por Preço"/>
+        <div id="specialtySelect" style={{ width: '100%', display: filter === 'specialtySelect' ? 'block' : 'none' }}>
+          <SelectEspecialidades setFormData={setEspecialidades}/>
         </div>
       </div>
     </>

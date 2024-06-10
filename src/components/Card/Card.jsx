@@ -31,7 +31,7 @@ function Card({
             </div>
             <div className="infoText">
               <div className="data">
-                <p className='neighborhood'>{endereco?.bairro || "Vila Matilde"}</p>
+                <p style={{marginBottom: '0px'}} className='neighborhood'>{endereco?.bairro || "Vila Matilde"}</p>
                 <h3 className='name'>{nome || "Maria Antonieta"}</h3>
               </div>
               <div className="specialties">
@@ -41,22 +41,23 @@ function Card({
               </div>
             </div>
           </div>
-          <div className="rating">
+          {/* <div className="rating">
             <Grade className='icon' style={{ marginBottom: '4px', marginRight: '0.25em', fontSize: '1.5em' }} />
             <p>4.5</p>
-          </div>
+          </div> */}
         </div>
         <div className="description">
           <p>{biografia || "Sou uma pessoa dedicada e experiente, comprometida em proporcionar cuidados compassivos e de qualidade para seus entes queridos. Com habilidades abrangentes em assistência diária, incluindo higiene pessoal, alimentação e administração de medicamentos, garanto um ambiente seguro e acolhedor, promovendo o bem-estar físico e emocional dos idosos sob meus cuidados."}</p>
         </div>
         <div className="cardFooter">
-          {price !== 'false' && (
+          {/* {price !== 'false' && (
             <div className="price">
-              <p style={{ fontSize: '16px' }}>R$ 150 /hora</p>
+            <p style={{ fontSize: '16px' }}>R$ 150 /hora</p>
             </div>
-          )}
+            )} */}
+          <div></div>
           {btn !== 'false' && (
-            <button className="btn" onClick={() => navigate("/Entrar")} >Conversar</button>
+            <button className="btn" onClick={() => navigate('/Chat', { state: { id: id, nome: nome, endereco: endereco, fotoPerfil: fotoPerfil, especialidades: especialidades } })} >Conversar</button>
           )}
         </div>
       </div>

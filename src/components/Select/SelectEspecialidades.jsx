@@ -16,7 +16,7 @@ const SelectEspecialidades = ({ value, setFormData }) => {
             try {
                 const response = await api.get('/especialidades');
                 const fetchedOptions = response.data.map((item) => [item.id, item.nome]);
-                const initialSelectedOptions = value.map((item) => [item.id, item.nome]);
+                const initialSelectedOptions = value ? value.map((item) => [item.id, item.nome]) : [];
                 setSelectedOptions(initialSelectedOptions);
                 const filteredOptions = fetchedOptions.filter(option => 
                     !initialSelectedOptions.some(selected => selected[0] === option[0])
