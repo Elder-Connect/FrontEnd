@@ -17,7 +17,7 @@ function GoogleBtn({ setModalState }) {
   const login = useGoogleLogin({
     scope: 'https://www.googleapis.com/auth/calendar',
     onSuccess: async (tokenResponse) => {handleLogin(tokenResponse)},
-    onError: errorResponse => setModalState(false),
+    onError: errorResponse => toast.error(errorResponse),
   });
   async function handleLogin(tokenResponse){
     setLoading(true);
@@ -27,13 +27,17 @@ function GoogleBtn({ setModalState }) {
     try {
       const response = await api.get(`/usuarios/email/${userInfo.email}`);
       setLoading(false);
-      setModalState(false);
+      if(setModalState){
+        setModalState(false);
+      }
       if (response.status === 200) {
         setLocalStorage(tokenResponse, response.data);
       }
     } catch (error) {
       setLoading(false);
-      setModalState(false);
+      if(setModalState){
+        setModalState(false);
+      }
       if (error.response && error.response.status === 404) {
         navigate('/Perfil', { state: { tokenResponse: tokenResponse, userInfo: userInfo } });
       } else {

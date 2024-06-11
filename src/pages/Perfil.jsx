@@ -105,6 +105,17 @@ function Perfil() {
                 const response = await api.put(`/usuarios/${localStorage.getItem('userId')}`, formatedData);
                 setLoading(false);
                 if (response.status === 200) {
+                    //Cadastro de Calendário de Cuidadores
+                    if(localStorage.getItem('userType') == USERTYPE.CUIDADOR || localStorage.getItem('userType') == USERTYPE.ADM){
+                        try{
+                            await api.post(`/calendarios?usuarioId=${response.data.id}`, null, {headers: {
+                                'accessToken': localStorage.getItem('accessToken')
+                            }})
+                        }catch(error){
+                            console.error('Failed to create calendar:', error);
+                            return;
+                        }
+                    }
                     toast.success('Usuário atualizado com sucesso');
                     navigate('/Cuidadores');
                 }
@@ -132,9 +143,9 @@ function Perfil() {
             const response = await api.post(url, formatedData);
             setLoading(false);
             if (response.status === 201) {
-                navigate('/Cuidadores');
                 setLocalStorage(tokenResponse, response.data);
                 toast.success('Usuário cadastrado com sucesso');
+                navigate('/Cuidadores');
             }
         } catch (error) {
             setLoading(false);
@@ -168,7 +179,7 @@ function Perfil() {
             document.getElementById('informacoesPessoaisBtn').style.color = 'var(--black)';
             document.getElementById('enderecoBtn').style.boxShadow = 'none';
             document.getElementById('enderecoBtn').style.color = 'var(--black)';
-            if(formData.tipoUsuario === USERTYPE.CUIDADOR){
+            if(formData.tipoUsuario === USERTYPE.CUIDADOR || formData.tipoUsuario === USERTYPE.ADM){
                 document.getElementById('especialidadesBtn').style.boxShadow = 'none';
                 document.getElementById('especialidadesBtn').style.color = 'var(--black)';
             }
@@ -211,7 +222,7 @@ function Perfil() {
                     <nav>
                         <button className='navigationBtn' id='informacoesPessoaisBtn' onClick={() => handleSectionChange('informacoesPessoais')} >Informações Pessoais</button>
                         <button className='navigationBtn' id='enderecoBtn' onClick={() => handleSectionChange('endereco')}>Endereço</button>
-                        {formData.tipoUsuario === USERTYPE.CUIDADOR && 
+                        {(formData.tipoUsuario === USERTYPE.CUIDADOR || formData.tipoUsuario === USERTYPE.ADM) && 
                             <button className='navigationBtn' id='especialidadesBtn' onClick={() => handleSectionChange('especialidades')}>Especialidades</button>
                         }
                     </nav>
