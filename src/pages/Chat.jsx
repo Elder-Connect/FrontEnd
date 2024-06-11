@@ -12,8 +12,10 @@ import { toast } from 'react-toastify';
 import { convertDateToFrontend, convertTimeToFrontend, formatDate, formatHour, formatPriceBackend, formatPriceFrontend, handleInputChange, handlePriceChange, isNewDay } from '../services/utils';
 import { USERTYPE } from '../services/enums';
 import Loading from '../components/Loading/Loading';
+import { useLocation } from 'react-router-dom';
 
 function Chat() {
+  const location = useLocation();
   const userId = Number(localStorage.getItem('userId'));
   const [loading, setLoading] = useState(false);
   const [contactId, setContactId] = useState(undefined);
@@ -38,16 +40,25 @@ function Chat() {
   const [endTime, setEndTime] = useState('');
   const [price, setPrice] = useState('');
 
+  const { state } = location;
+  const cuidadorInfo = state ? state : null;
   useEffect(() => {
-    /*
-      TODO If the URL has a contactId, load the information of the contact and put into contacts.
-    */
-
     async function loadContacts() {
       setLoading(true);
       try{
         let c = await api.get(`/mensagens/conversas/${userId}`);
         setLoading(false);
+        
+        //Cuidador Vindo do Chat
+        if(cuidadorInfo) {
+          if(c.data.map(contact => contact.id).includes(cuidadorInfo.id)){
+            handleContactClick(cuidadorInfo.id);
+          }else{
+            setContactId(cuidadorInfo.id);
+            c.data.push(cuidadorInfo);
+          }
+        }
+
         c.data.length === 0 ? toast.info('Você não possui conversas') : setContacts(c.data);
       }catch(err){
         setLoading(false);
@@ -79,14 +90,15 @@ function Chat() {
     return () => clearInterval(intervalId);
   }, [userId, contactId]);
 
-  const handleContactClick = async (contactId) => {
+  const handleContactClick = async (id) => {
     setLoading(true);
+    if(id === contactId) return setLoading(false);
     try {
-      const response = await api.get(`/mensagens/${userId}/${contactId}`);
+      const response = await api.get(`/mensagens/${userId}/${id}`);
       setLoading(false);
       setMessages(response.data);
-      setContactId(contactId);
-      setProposal({ ...proposal, destinatarioId: contactId });
+      setContactId(id);
+      setProposal({ ...proposal, destinatarioId: id });
       // TODO Scroll to the bottom of the chat
     } catch (err) {
       setLoading(false);
