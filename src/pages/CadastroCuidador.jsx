@@ -19,7 +19,7 @@ function CadastroCuidador() {
         documento: "",
         tipoUsuario: USERTYPE.CUIDADOR,
         dataNascimento: "",
-        genero: "",
+        genero: GENDER.OUTRO,
         endereco: {
             cep: "",
             logradouro: "",
