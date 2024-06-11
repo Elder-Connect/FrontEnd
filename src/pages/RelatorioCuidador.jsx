@@ -13,7 +13,7 @@ function RelatorioCuidador() {
 
     useEffect(() => {
         setLoading(true);
-        api.get('/usuarios').then((response) => {
+        api.get('/usuarios/colaboradores').then((response) => {
             setLoading(false);
             const { data } = response;
             setCardsData(data);
