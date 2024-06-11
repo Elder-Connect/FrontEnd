@@ -5,15 +5,14 @@ import Input from '../components/Input/Input'
 import { GENDER, USERTYPE, genderOptions, ufOptions } from '../services/enums';
 import api from '../services/api';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { handleCepChange, handleDocumentChange, handleInputChange, handleDataNascimento, validadeForm } from '../services/utils';
+import { handleCepChange, handleDocumentChange, handleInputChange, handleDataNascimento, validadeForm, convertDateToBackendFormat } from '../services/utils';
 import Select from '../components/Select/Select';
 import SelectEspecialidades from '../components/Select/SelectEspecialidades';
 import Loading from '../components/Loading/Loading';
 
 function CadastroCuidador() {
-    const navigate = useNavigate();
     const [loading, setLoading] = React.useState(false);
+    const [userStack, setUserStack] = React.useState([]);
     const [formData, setFormData] = React.useState({
         nome: "",
         email: "",
@@ -36,20 +35,25 @@ function CadastroCuidador() {
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
-        
-        //Validar Formulário
-        if(!validadeForm()){
+
+        // Validate Form
+        if (!validadeForm()) {
             setLoading(false);
             toast.error('Preencha todos os campos obrigatórios');
             return;
         }
-        
-        //Cadastrar Usuário
+
+        const formatedData = {
+            ...formData,
+            dataNascimento: convertDateToBackendFormat(formData.dataNascimento)
+        };
+
+        // Register User
         try {
-            const response = await api.post(`/usuarios/colaborador`, formData);
+            const response = await api.post(`/usuarios/colaborador`, formatedData);
             setLoading(false);
             if (response.status === 201) {
-                navigate('/Cuidadores');
+                setUserStack([...userStack, [response.data.id, formData.nome]]);
                 toast.success('Usuário cadastrado com sucesso');
             }
         } catch (error) {
@@ -57,7 +61,28 @@ function CadastroCuidador() {
             toast.error('Falha ao cadastrar usuário');
             console.error('Failed to sign up:', error);
         }
-    };    
+    };
+
+    const deleteLastCreatedUser = async () => {
+        if (userStack.length === 0) {
+            toast.error('Não há ações para desfazer!');
+            return;
+        }
+        setLoading(true);
+        const lastUser = userStack.pop();
+        try {
+            const response = await api.delete(`/usuarios/${lastUser[0]}`);
+            setLoading(false);
+            if (response.status === 404 || response.status === 204) {
+                toast.success(`Usuário ${lastUser[1]} removido com sucesso`);
+                setUserStack([...userStack]);
+            }
+        } catch (error) {
+            setLoading(false);
+            toast.error('Failed to delete user');
+            console.error('Failed to delete user:', error);
+        }
+    }
 
     return (
         <>
@@ -76,7 +101,7 @@ function CadastroCuidador() {
                             <Input name="nome" label="Nome" placeholder="John Richard Doe" mandatory onChange={(e) => handleInputChange(e, setFormData)} value={formData.nome} />
                             <Input name="documento" label="Documento" placeholder="153.436.719-10" mandatory onChange={(e) => handleDocumentChange(e, setFormData)} value={formData.documento} />
                             <Input name="email" label="Email" placeholder="John.doe@example.com" mandatory onChange={(e) => handleInputChange(e, setFormData)} value={formData.email} />
-                            <Input name="dataNascimento" label="Data de Nascimento" placeholder="1990-12-31" onChange={(e) => handleDataNascimento(e, setFormData)} value={formData.dataNascimento} />
+                            <Input name="dataNascimento" value={formData.dataNascimento} onChange={(e) => handleDataNascimento(e, setFormData)} label="Data de Nascimento" placeholder="31/12/1990" mandatory />
                             <Select name="genero" label="Gênero" value={formData.genero} options={genderOptions} onChange={(e) => handleInputChange(e, setFormData)} mandatory />
                             <SelectEspecialidades value={formData.especialidades} setFormData={setFormData} />
                         </div>
@@ -87,7 +112,7 @@ function CadastroCuidador() {
                                 <hr />
                             </div>
                             <Input name="endereco.cep" label="CEP" placeholder="463.23-010" onChange={(e) => handleCepChange(e, setFormData)} value={formData.endereco.cep} />
-                            <Input name="endereco.logradouro" label="Logradouro" placeholder="Rua de Baixo" onChange={(e) => handleInputChange(e, setFormData)} value={formData.endereco.logradouro}/>
+                            <Input name="endereco.logradouro" label="Logradouro" placeholder="Rua de Baixo" onChange={(e) => handleInputChange(e, setFormData)} value={formData.endereco.logradouro} />
 
                             <div className='formLinha'>
                                 <Input name="endereco.numero" label="Número" placeholder="534" onChange={(e) => handleInputChange(e, setFormData)} value={formData.endereco.numero} />
@@ -100,11 +125,16 @@ function CadastroCuidador() {
                         </div>
                     </div>
 
-                    <button className='btn' type='submit'>Cadastro</button>
+                    <div style={{display: 'flex', gap: '1em'}}>
+                        <button className='btn' type='submit'>Cadastro</button>
+                        {userStack.length > 0 &&
+                            <button onClick={() => deleteLastCreatedUser()} className='btnDelete'>Desfazer Última Criação</button>
+                        }
+                    </div>
                 </form>
             </div>
         </>
     )
 }
 
-export default CadastroCuidador
+export default CadastroCuidador;
