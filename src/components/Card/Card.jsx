@@ -47,7 +47,7 @@ function Card({
           </div> */}
         </div>
         <div className="description">
-          <p>{biografia || "Sou uma pessoa dedicada e experiente, comprometida em proporcionar cuidados compassivos e de qualidade para seus entes queridos. Com habilidades abrangentes em assistência diária, incluindo higiene pessoal, alimentação e administração de medicamentos, garanto um ambiente seguro e acolhedor, promovendo o bem-estar físico e emocional dos idosos sob meus cuidados."}</p>
+          <p>{biografia || "..."}</p>
         </div>
         <div className="cardFooter">
           {/* {price !== 'false' && (
