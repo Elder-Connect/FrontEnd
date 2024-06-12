@@ -22,20 +22,19 @@ function Cuidadores() {
     const especialidadesArray = await getEspecialidades(especialidades.especialidades);
     try {
       const response = await api.get('/usuarios/colaboradores-disponiveis', {
+        especialidades: especialidadesArray,
+        dataHoraInicio: startDate,
+        dataHoraFim: endDate
+      },{
         headers: {
           'accessToken': localStorage.getItem('accessToken')
-        },
-        params: {
-          especialidades: especialidadesArray,
-          dataHoraInicio: startDate,
-          dataHoraFim: endDate
         }
       });
       setCuidadores(response.data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      if(error.response.status === 404){
+      if(error.response.status === 204){
         setCuidadores([]);
         return;
       }
