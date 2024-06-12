@@ -21,7 +21,7 @@ function Cuidadores() {
     }
     const especialidadesArray = await getEspecialidades(especialidades.especialidades);
     try {
-      const response = await api.get('/colaboradores-disponiveis', {
+      const response = await api.get('/usuarios/colaboradores-disponiveis', {
         headers: {
           'accessToken': localStorage.getItem('accessToken')
         },
