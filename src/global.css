@@ -6,7 +6,11 @@
   --black: hsl(232, 13%, 23%);
   --input-text: hsl(231, 13%, 50%);
   --subtitle: hsl(232, 3%, 75%);
+  --sub-subtitle: hsl(0, 0%, 70%);
   --white: hsl(0, 0%, 90%);
+  --white-hover: hsl(0, 0%, 85%);
+  --error: hsl(6, 78%, 57%);
+  --success: hsl(122, 93%, 38%);
 }
 
 body {
