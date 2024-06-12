@@ -80,7 +80,6 @@ function Cuidadores() {
                         genero={data.genero}
                         endereco={data.endereco}
                         especialidades={data.especialidades}
-                        btn='false'
                         price='false'
                     />
             ))}
