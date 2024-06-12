@@ -335,11 +335,9 @@ function Chat() {
               </div>
             </div>
             <div className="chat-input">
-              {localStorage.getItem('userType') == USERTYPE.CUIDADOR && (
-                <button onClick={() => handleOpenProposalModal()} className="send-button-left">
-                  <AddIcon />
-                </button>
-              )}
+              <button onClick={() => handleOpenProposalModal()} className="send-button-left">
+                <AddIcon />
+              </button>
               <input id="inputMessage" onKeyDown={(e) => handleSendMessage(e)} value={message} onChange={(e) => setMessage(e.target.value)} type="text" placeholder="Digite sua mensagem..." />
               <button onClick={(e) => handleSend(e)} className="send-button-right">
                 <SendIcon />
