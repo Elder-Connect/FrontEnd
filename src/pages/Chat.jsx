@@ -239,7 +239,7 @@ function Chat() {
               </div>
             </div>
             <div className="chat-messages">
-              {messages.map((message, index) => {
+              {messages && messages.map((message, index) => {
                 //Data Processing
                 const messageType = message.remetente.id === userId ? 'sent' : 'received';
                 const formatedSentTime = formatHour(message.dataHora);
