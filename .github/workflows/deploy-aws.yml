@@ -32,7 +32,9 @@ jobs:
       run: |
         echo "${SSH_PRIVATE_KEY}" > /tmp/ec2-key.pem
         chmod 600 /tmp/ec2-key.pem
-        scp -o StrictHostKeyChecking=no -i /tmp/ec2-key.pem -r build/* ${EC2_USER}@${EC2_HOST}:/var/www/elderly
+        scp -o StrictHostKeyChecking=no -i /tmp/ec2-key.pem -r build/* ${EC2_USER}@${EC2_HOST}:/home/${EC2_USER}
+        ssh -o StrictHostKeyChecking=no -i /tmp/ec2-key.pem ${EC2_USER}@${EC2_HOST} "sudo rm -rf /var/www/elderly/*"
+        ssh -o StrictHostKeyChecking=no -i /tmp/ec2-key.pem ${EC2_USER}@${EC2_HOST} "sudo mv /home/${EC2_USER}/* /var/www/elderly"
         ssh -o StrictHostKeyChecking=no -i /tmp/ec2-key.pem ${EC2_USER}@${EC2_HOST} "sudo systemctl restart nginx"
 
     - name: Clean up
