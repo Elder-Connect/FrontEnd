@@ -13,6 +13,7 @@ import { convertDateToFrontend, convertTimeToFrontend, formatDate, formatHour, f
 import { USERTYPE } from '../services/enums';
 import Loading from '../components/Loading/Loading';
 import { useLocation } from 'react-router-dom';
+import Pipefy from '../components/Pipefy/Pipefy';
 
 function Chat() {
   const location = useLocation();
@@ -206,6 +207,7 @@ function Chat() {
     <>
       <Header />
       <Loading show={loading} />
+      <Pipefy/>
       <div className="chat-container">
         <div className="contact-list">
           {contacts.map(contact => (

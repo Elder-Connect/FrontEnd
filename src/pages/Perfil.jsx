@@ -12,6 +12,7 @@ import Select from '../components/Select/Select';
 import SelectEspecialidades from '../components/Select/SelectEspecialidades';
 import { logOff, setLocalStorage } from '../services/auth';
 import Loading from '../components/Loading/Loading';
+import Pipefy from '../components/Pipefy/Pipefy';
 
 function Perfil() {
     const { user, setUser } = useContext(UserContext);
@@ -212,6 +213,7 @@ function Perfil() {
     return (
         <>
             <Header />
+            <Pipefy/>
             <Loading show={loading} />
             <div className='container'>
                 <div className="imageContainer">
