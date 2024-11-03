@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Header from '../components/Header/Header'
 import Card from '../components/Card/Card'
 import Search from '../components/Search/Search'
+import Pipefy from '../components/Pipefy/Pipefy'
 import api from '../services/api'
 import { toast } from 'react-toastify'
 import Loading from '../components/Loading/Loading'
@@ -79,6 +80,7 @@ function Cuidadores() {
 
   return (
     <>
+        <Pipefy />
         <Header />
         <Search handler={handleSearch} />
         <Loading show={loading} />
@@ -134,6 +136,7 @@ function Cuidadores() {
             ))}
           </div>
         }
+        
     </>
   )
 }

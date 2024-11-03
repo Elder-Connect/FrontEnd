@@ -3,12 +3,10 @@ footer {
     justify-content: space-between;
     align-items: center;
     padding: 1em;
-  }
-  
-  .logo {
     margin-left: 2em;
-    height: 5vh;
+    margin-right: 2em;
   }
+
   
   nav {
     display: flex;
