@@ -46,7 +46,3 @@ p.error{
 .text-error{
     color: var(--error);
 }
-
-span{
-    color: var(--error);
-}

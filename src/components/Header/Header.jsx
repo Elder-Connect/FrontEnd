@@ -26,7 +26,12 @@ function Header() {
           <button className='btnNoBg' onClick={() => navigate("/")}>Home</button>
           <button className='btnNoBg' onClick={() => navigate("/Cuidadores")}>Cuidadores</button>
           {user ? <button className='btnNoBg' onClick={() => navigate("/Chat")}>Chat</button> : null}
-          {isAdm ? <><button className='btnNoBg' onClick={() => navigate("/CadastroCuidador")}>Cadastro de Cuidadores</button> <button className='btnNoBg' onClick={() => navigate("/RelatorioCuidador")}>Relatório</button></> : null}
+          {isAdm ? 
+            <>
+              <button className='btnNoBg' onClick={() => navigate("/CadastroCuidador")}>Cadastro de Cuidadores</button>
+              <button className='btnNoBg' onClick={() => navigate("/RelatorioCuidador")}>Relatório</button>
+              <button className='btnNoBg' onClick={() => navigate("/Dashboard")}>Dashboard</button>
+            </> : null}
         </nav>
         { user ? <HeaderDropdown /> : 
           <div className='user'>

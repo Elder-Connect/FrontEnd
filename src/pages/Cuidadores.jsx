@@ -13,6 +13,39 @@ function Cuidadores() {
   const [showModal, setShowModal] = useState(false);
   const [cardsData, setCardsData] = useState([]);
 
+  // const handleSearch = async (startDate, endDate, especialidades) => {
+  //   setLoading(true);
+  //   if(!localStorage.getItem('accessToken')){
+  //     setLoading(false);
+  //     setShowModal(true);
+  //     return;
+  //   }
+  //   const especialidadesArray = await getEspecialidades(especialidades.especialidades);
+  //   try {
+  //     const response = await api.post('/usuarios/colaboradores-disponiveis', {
+  //       especialidades: especialidadesArray,
+  //       dataHoraInicio: startDate,
+  //       dataHoraFim: endDate
+  //     },
+  //     { 
+  //       headers: {
+  //         'accessToken': localStorage.getItem('accessToken')
+  //       }
+  //     });
+  //     setCuidadores(response.data);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     setLoading(false);
+  //     if(error.response.status === 404){
+  //       setCuidadores([]);
+  //       return;
+  //     }
+  //     toast.error('Erro ao buscar cuidadores');
+  //     console.error('Failed to fetch:', error);
+  //   }
+  // }
+
+  //Return all users
   const handleSearch = async (startDate, endDate, especialidades) => {
     setLoading(true);
     api.get('/usuarios/colaboradores').then((response) => {
@@ -53,18 +86,34 @@ function Cuidadores() {
           isOpen={showModal}
           setIsOpen={setShowModal}
         />
-        {!cardsData &&
+        {!cuidadores && !cardsData &&
           <div className="chat-empty" style={{height: '75vh'}}>
             <div className="chat-empty-icon">🔍</div>
             <div className="chat-empty-text">Busque por um Cuidador.</div>
           </div>
         }
-        {/* {cardsData &&
+        {cuidadores && cuidadores.length === 0 && cardsData && cardsData.length == 0 &&
           <div className="chat-empty" style={{height: '75vh'}}>
             <div className="chat-empty-icon">😔</div>
             <div className="chat-empty-text">Nenhum Cuidador encontrado.</div>
           </div>
-        } */}
+        }
+        {cuidadores && !cuidadores.length === 0 &&
+          <div style={{ display: 'flex', margin: '0 auto', width: '95%', flexDirection: 'row', gap: '1em', flexWrap: 'wrap', alignContent: 'center', justifyContent: 'center'}}>
+            {cuidadores.map((cuidador, index) => (
+                <Card 
+                  key={index}
+                  id={cuidador.id}
+                  nome={cuidador.nome}
+                  biografia={cuidador.biografia}
+                  fotoPerfil={cuidador.fotoPerfil}
+                  endereco={cuidador.endereco}
+                  especialidades={cuidador.especialidades}
+                  btn
+                />
+            ))}
+          </div>
+        }
         {cardsData &&
           <div style={{ display: 'flex', margin: '0 auto', width: '95%', flexDirection: 'row', gap: '1em', flexWrap: 'wrap', alignContent: 'center', justifyContent: 'center'}}>
             {cardsData && cardsData.map((data, index) => (
