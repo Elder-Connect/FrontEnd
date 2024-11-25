@@ -9,6 +9,7 @@ import RelatorioCuidador from './pages/RelatorioCuidador';
 import Authentication from './services/Authentication';
 import Chat from './pages/Chat';
 import { USERTYPE } from './services/enums';
+import Dashboard from './pages/Dashboard';
 
 function Router() {
   return (
@@ -20,6 +21,7 @@ function Router() {
         <Route path='/CadastroCuidador' element={<Authentication userType={USERTYPE.ADM}><CadastroCuidador/></Authentication>}/>
         <Route path='/Chat' element={<Authentication><Chat/></Authentication>}/>
         <Route path='/RelatorioCuidador' element={<Authentication userType={USERTYPE.ADM}><RelatorioCuidador/></Authentication>}/>
+        <Route path='/Dashboard' element={<Authentication userType={USERTYPE.ADM}><Dashboard/></Authentication>}/>
 				<Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

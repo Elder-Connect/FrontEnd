@@ -13,6 +13,7 @@ import { convertDateToFrontend, convertTimeToFrontend, formatDate, formatHour, f
 import { USERTYPE } from '../services/enums';
 import Loading from '../components/Loading/Loading';
 import { useLocation } from 'react-router-dom';
+import Pipefy from '../components/Pipefy/Pipefy';
 
 function Chat() {
   const location = useLocation();
@@ -206,6 +207,7 @@ function Chat() {
     <>
       <Header />
       <Loading show={loading} />
+      <Pipefy/>
       <div className="chat-container">
         <div className="contact-list">
           {contacts.map(contact => (
@@ -239,7 +241,7 @@ function Chat() {
               </div>
             </div>
             <div className="chat-messages">
-              {messages.map((message, index) => {
+              {messages && messages.map((message, index) => {
                 //Data Processing
                 const messageType = message.remetente.id === userId ? 'sent' : 'received';
                 const formatedSentTime = formatHour(message.dataHora);
@@ -335,11 +337,9 @@ function Chat() {
               </div>
             </div>
             <div className="chat-input">
-              {localStorage.getItem('userType') == USERTYPE.CUIDADOR && (
-                <button onClick={() => handleOpenProposalModal()} className="send-button-left">
-                  <AddIcon />
-                </button>
-              )}
+              <button onClick={() => handleOpenProposalModal()} className="send-button-left">
+                <AddIcon />
+              </button>
               <input id="inputMessage" onKeyDown={(e) => handleSendMessage(e)} value={message} onChange={(e) => setMessage(e.target.value)} type="text" placeholder="Digite sua mensagem..." />
               <button onClick={(e) => handleSend(e)} className="send-button-right">
                 <SendIcon />

@@ -3,10 +3,8 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 1em;
-}
-
-.logo {
   margin-left: 2em;
+  margin-right: 2em;
 }
 
 nav {
@@ -49,8 +47,4 @@ nav {
 
 .dropdown-content a:hover {
   background-color: var(--primary);
-}
-
-.user{
-  margin-right: 2em;
 }
