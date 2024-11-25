@@ -21,7 +21,7 @@ function Router() {
         <Route path='/CadastroCuidador' element={<Authentication userType={USERTYPE.ADM}><CadastroCuidador/></Authentication>}/>
         <Route path='/Chat' element={<Authentication><Chat/></Authentication>}/>
         <Route path='/RelatorioCuidador' element={<Authentication userType={USERTYPE.ADM}><RelatorioCuidador/></Authentication>}/>
-        <Route path='/Dashboard' element={<Dashboard/>}/>
+        <Route path='/Dashboard' element={<Authentication userType={USERTYPE.ADM}><Dashboard/></Authentication>}/>
 				<Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
