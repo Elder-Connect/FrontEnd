@@ -3,6 +3,7 @@ import './Dashboard.css';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import Header from '../components/Header/Header';
 import Loading from '../components/Loading/Loading';
+import api from '../services/api';
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -10,61 +11,125 @@ const Dashboard = () => {
   const [totalAccepts, settotalAccepts] = useState(0);
   const [billing, setBilling] = useState(0);
   const [profit, setProfit] = useState(0);
-
-  const dailyData = Array.from({ length: 23 }, (_, i) => ({
-    day: i + 1,
-    value: (i * 600) + Math.random() * 1000
-  }));
-
-  const monthlyData = [
-    { month: 'Dez/23', value: 12500 },
-    { month: 'Jan/24', value: 12340 },
-    { month: 'Fev/24', value: 13500 },
-    { month: 'Mar/24', value: 13200 },
-    { month: 'Abr/24', value: 9800 },
-    { month: 'Mai/24', value: 7600 },
-    { month: 'Jun/24', value: 14200 },
-    { month: 'Jul/24', value: 10500 },
-    { month: 'Ago/24', value: 11800 },
-    { month: 'Set/24', value: 9500 },
-    { month: 'Out/24', value: 5200 },
-    { month: 'Nov/24', value: dailyData[dailyData.length - 1].value }
-  ];
+  const [profitTarget, setProfitTarget] = useState(0);
+  const [dailyData, setDailyData] = useState([]);
+  const [monthlyData, setMonthlyData] = useState([]);
+  const [proposalData, setProposalData] = useState([]);
   
-  const proposalData = [
-    { month: 'Jan', propostas: 230, aceites: 123 },
-    { month: 'Fev', propostas: 274, aceites: 105 },
-    { month: 'Mar', propostas: 240, aceites: 95 },
-    { month: 'Abr', propostas: 180, aceites: 85 },
-    { month: 'Mai', propostas: 160, aceites: 90 },
-    { month: 'Jun', propostas: 290, aceites: 110 },
-    { month: 'Jul', propostas: 190, aceites: 95 },
-    { month: 'Ago', propostas: 210, aceites: 100 },
-    { month: 'Set', propostas: 170, aceites: 85 },
-    { month: 'Out', propostas: 130, aceites: 70 },
-    { month: 'Nov', propostas: 200, aceites: 95 },
-    { month: 'Dez', propostas: 250, aceites: 115 }
-  ];
+  /*
+    TODOs for improvement:
+    - Dinamic year/month for API requests
+    - Dinamic profit target for API requests
+  */
 
+  const monthMap = {
+    january: 'Jan',
+    february: 'Fev',
+    march: 'Mar',
+    april: 'Abr',
+    may: 'Mai',
+    june: 'Jun',
+    july: 'Jul',
+    august: 'Ago',
+    september: 'Set',
+    october: 'Out',
+    november: 'Nov',
+    december: 'Dez',
+  };
+
+  //Request data from API
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 3000);
+    //Proposal data
+    const fetchProposalData = async () => {
+      try {
+        const response = await api.get('/propostas/aceite/2024');
+        const transformedData = transformApiProposalResponse(response.data);
+        setProposalData(transformedData);
+      } catch (err) {
+        console.log('Failed to fetch proposals data');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    return () => clearTimeout(timer);
+    //Monthly data
+    const fetchMonthlyData = async () => {
+      try {
+        const response = await api.get('/propostas/faturamento/2024');
+        const transformedData = transformApiMonthlyResponse(response.data);
+        setMonthlyData(transformedData);
+      } catch (err) {
+        console.log('Failed to fetch monthly data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    //Daily data
+    const fetchDailyData = async () => {
+      try {
+        const response = await api.get('/propostas/faturamento-diario/11/2024');
+        const transformedData = transformApiDailyResponse(response.data);
+        setDailyData(transformedData);
+      } catch (err) {
+        console.log('Failed to fetch daily data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    //Profit target
+    const fetchProfitTargetData = async () => {
+      try {
+        const response = await api.get('/lucros/1');
+        setProfitTarget(response.data.lucro);
+      } catch (err) {
+        console.log('Failed to fetch daily data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProposalData();
+    fetchMonthlyData();
+    fetchDailyData();
+    fetchProfitTargetData();
   }, []);
 
+  //Calculate static fields
   useEffect(() => {
     settotalProposals(proposalData.reduce((acc, { propostas }) => acc + propostas, 0));
     settotalAccepts(proposalData.reduce((acc, { aceites }) => acc + aceites, 0));
     setBilling(monthlyData.reduce((acc, { value }) => acc + value, 0));
-  }, []);
-  
+  }, [proposalData, monthlyData]);
   useEffect(() => {
-    setProfit(billing * 0.03);
-    console.log("updated2");
+    setProfit(billing * 0.05);
   }, [billing]);
-    
+
+  // Transform function for Proposal API
+  const transformApiProposalResponse = (apiData) => {
+    return Object.entries(apiData).map(([month, [propostas, aceites]]) => ({
+      month: monthMap[month],
+      propostas,
+      aceites,
+    }));
+  };
+
+  // Transform function for Monthly API
+  const transformApiMonthlyResponse = (apiData) => {
+    return Object.entries(apiData).map(([month, value]) => ({
+      month: monthMap[month],
+      value,
+    }));
+  };
+
+  // Transform function for Daily API
+  const transformApiDailyResponse = (apiData) => {
+    return Object.entries(apiData).map(([day, value]) => ({
+      day: day.trim(2),
+      value,
+    }));
+  };
 
   return (
     <>
@@ -182,7 +247,7 @@ const Dashboard = () => {
                   />
                   <Line 
                     type="monotone"
-                    dataKey={() => 3000}
+                    dataKey={() => profitTarget}
                     stroke="#ccc"
                     strokeDasharray="5 5"
                     strokeWidth={1}
