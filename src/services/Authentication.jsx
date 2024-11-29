@@ -7,7 +7,7 @@ const Authentication = ({ children, userType }) => {
   const { user } = useContext(UserContext);
 
   if (user === undefined) {
-    <Loading show />
+    return <Loading show />;
   }
 
   if (!user || user === null) {
