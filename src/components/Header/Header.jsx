@@ -31,6 +31,7 @@ function Header() {
               <button className='btnNoBg' onClick={() => navigate("/CadastroCuidador")}>Cadastro de Cuidadores</button>
               <button className='btnNoBg' onClick={() => navigate("/RelatorioCuidador")}>Relatório</button>
               <button className='btnNoBg' onClick={() => navigate("/Dashboard")}>Dashboard</button>
+              <button className='btnNoBg' onClick={() => navigate("/Settings")}>Gerenciamento</button>
             </> : null}
         </nav>
         { user ? <HeaderDropdown /> : 

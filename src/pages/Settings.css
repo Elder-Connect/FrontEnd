@@ -1,0 +1,98 @@
+/* Settings.css */
+.container h1 {
+    font-size: 30px;
+    margin-bottom: 2em;
+}
+
+.container h2 {
+    color: var(--black);
+    font-weight: 500;
+    margin: 0.75em;
+    text-align: center;
+}
+
+.container hr {
+    border: 1px solid var(--white);
+    margin-bottom: 2em;
+}
+
+.formCadastro {
+    display: flex;
+    gap: 10vh;
+    justify-content: center;
+    margin-bottom: 2em;
+}
+
+.formColuna {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    width: 400px;
+}
+
+.especialidade-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.especialidades-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-top: 2em;
+}
+
+.especialidade-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    background: #f7f7f7;
+    border-radius: 8px;
+}
+
+.subBtnSettings {
+    background: var(--error);
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btnSettings {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 1em;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btns{
+    display: flex;
+    gap: 0.5em;
+}
+
+.edit-form {
+    display: flex;
+    gap: 1em;
+    width: 100%;
+    align-items: center;
+}
+
+.btns {
+    display: flex;
+    gap: 0.5em;
+}
+
+.btnEdit {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    cursor: pointer;
+}
