@@ -120,6 +120,12 @@ export const formatPriceBackend = (price) => {
 export const handleInputChange = (event, setFormData) => {
     let { name, value } = event.target;
     value = value === '' ? '' : (isNaN(value) ? value : Number(value));
+
+    if (typeof setFormData === 'function' && !setFormData.toString().includes('prevFormData')) {
+        setFormData(value);
+        return;
+    }
+
     if (name.includes('endereco.')) {
         const endereco = name.split('.')[1];
         setFormData(prevFormData => ({

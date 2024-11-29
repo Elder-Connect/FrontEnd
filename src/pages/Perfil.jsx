@@ -231,7 +231,7 @@ function Perfil() {
                 </div>
 
 
-                <form onSubmit={handleFormSubmit}>
+                <form onSubmit={handleFormSubmit} className="formPerfil">
                     <div className='formCadastro'>
                         {/* informações pessoais */}
                         <div className='inputWrapper' id="informacoesPessoais">
