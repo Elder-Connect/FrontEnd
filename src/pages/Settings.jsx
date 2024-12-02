@@ -1,16 +1,15 @@
-// Settings.jsx
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header/Header';
 import './Settings.css';
 import Loading from '../components/Loading/Loading';
 import Input from '../components/Input/Input';
-import { handleInputChange } from '../services/utils';
+import { handleProfitChange } from '../services/utils';
 import { toast } from 'react-toastify';
 import api from '../services/api';
 
 function Settings() {
     const [loading, setLoading] = useState(false);
-    const [targetProfit, setTargetProfit] = useState();
+    const [targetProfit, setTargetProfit] = useState("");
     const [especialidade, setEspecialidade] = useState("");
     const [especialidades, setEspecialidades] = useState([]);
     const [editingEspecialidade, setEditingEspecialidade] = useState(null);
@@ -126,7 +125,7 @@ function Settings() {
                                 type="number"
                                 placeholder="100000"
                                 value={targetProfit}
-                                onChange={(e) => handleInputChange(e, setTargetProfit)}
+                                onChange={(e) => handleProfitChange(e, setTargetProfit)}
                                 mandatory
                             />
                             <button className='btnSettings' type='submit'>Salvar Meta</button>
@@ -150,7 +149,7 @@ function Settings() {
                         </form>
                         <div className="especialidades-list">
                             {especialidades.map((esp) => (
-                                <div className="especialidade-item">
+                                <div className="especialidade-item" key={esp.id}>
                                     {editingEspecialidade?.id === esp.id ? (
                                         <div className="edit-form">
                                             <Input
